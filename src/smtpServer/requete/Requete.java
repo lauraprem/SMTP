@@ -23,12 +23,66 @@ public class Requete {
 		fileMails = null;
 	}
 
+	// public void setUserRequete() {
+	// String user = apop.getUser();
+	// if (user != null) {
+	// quit.setUser(user);
+	// retr.setUser(user);
+	//
+	// fileMails = new FileMails(user, EXTENSION_MAIL, MAIL_PATH + user
+	// + "/");
+	// // TODO A enlever le save
+	// // fileMails.saveMails();
+	// fileMails.extractMails();
+	// }
+	// }
+
+	// public Etat processingApop(String params) {
+	// Etat etat = apop.Apop(params);
+	// if (etat == Etat.TRANSACTION) {
+	// setUserRequete();
+	// }
+	// return etat;
+	// }
+
+	public FileMails getFileMails() {
+		return fileMails;
+	}
+
+	public void setFileMails(FileMails fileMails) {
+		this.fileMails = fileMails;
+	}
+
 	public ActionEHLO getEhlo() {
 		return ehlo;
 	}
 
-	public void setApop(ActionEHLO ehlo) {
+	public void setEhlo(ActionEHLO ehlo) {
 		this.ehlo = ehlo;
+	}
+
+	public ActionMAIL getMail() {
+		return mail;
+	}
+
+	public void setMail(ActionMAIL mail) {
+		this.mail = mail;
+	}
+
+	public ActionRCPT getRctp() {
+		return rctp;
+	}
+
+	public void setRctp(ActionRCPT rctp) {
+		this.rctp = rctp;
+	}
+
+	public ActionDATA getData() {
+		return data;
+	}
+
+	public void setData(ActionDATA data) {
+		this.data = data;
 	}
 
 	public ActionQUIT getQuit() {
@@ -38,28 +92,6 @@ public class Requete {
 	public void setQuit(ActionQUIT quit) {
 		this.quit = quit;
 	}
-
-//	public void setUserRequete() {
-//		String user = apop.getUser();
-//		if (user != null) {
-//			quit.setUser(user);
-//			retr.setUser(user);
-//
-//			fileMails = new FileMails(user, EXTENSION_MAIL, MAIL_PATH + user
-//					+ "/");
-//			// TODO A enlever le save
-////			fileMails.saveMails();
-//			fileMails.extractMails();
-//		}
-//	}
-
-//	public Etat processingApop(String params) {
-//		Etat etat = apop.Apop(params);
-//		if (etat == Etat.TRANSACTION) {
-//			setUserRequete();
-//		}
-//		return etat;
-//	}
 
 	public boolean processingQuit() {
 		return quit.PrecessingDefault();

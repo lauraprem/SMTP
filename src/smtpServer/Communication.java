@@ -75,7 +75,7 @@ public class Communication extends Thread {
 			outDonnees.flush();
 			MsgServer.msgInfo("Send", msg, user);
 
-			// Permet de savoir si la connexion est à clôturer
+			// Permet de savoir si la connexion est ï¿½ clï¿½turer
 			boolean isQuit = false;
 			while (!isQuit) {
 
@@ -91,7 +91,7 @@ public class Communication extends Thread {
 			}
 
 		} catch (SocketTimeoutException e) {
-			System.out.println(user + " time_out dépassé : " + e.getMessage());
+			System.out.println(user + " time_out dï¿½passï¿½ : " + e.getMessage());
 			// TODO gestion erreur
 			// erreur(408);
 		} catch (IOException ex) {
@@ -117,10 +117,10 @@ public class Communication extends Thread {
 	 */
 	public boolean processingRequest(String receive) {
 
-		// Permet de savoir si la connexion est à clôturer
+		// Permet de savoir si la connexion est ï¿½ clï¿½turer
 		boolean isQuit = false;
 
-		// Récupération et validation de la commande en fonction de l'état
+		// Rï¿½cupï¿½ration et validation de la commande en fonction de l'ï¿½tat
 		// courrent
 		if (receive.length() >= 4) { // si fin \r\n
 			String command = receive.substring(0, 4);
@@ -136,7 +136,7 @@ public class Communication extends Thread {
 					// etatCourant = requete.processingEhlo(params);
 					// //ETABL_TRANSAC
 
-					// Récupération des mails
+					// Rï¿½cupï¿½ration des mails
 					// if (etatCourant == Etat.ETABL_TRANSAC) {
 					// // user = requete.getApop().getUser();
 					// }
@@ -157,8 +157,9 @@ public class Communication extends Thread {
 			case ETABL_TRANSAC:
 				switch (command) {
 				case "MAIL FROM":
-					 MsgServer.msgInfo("processing", "MAIL FROM ...", user);
-					// etatCourant = requete.processingEhlo(params); TRANSAC_NO_DEST
+					MsgServer.msgInfo("processing", "MAIL FROM ...", user);
+					// etatCourant = requete.processingEhlo(params);
+					// TRANSAC_NO_DEST
 					break;
 				case "QUIT":
 					MsgServer.msgInfo("processing", "QUIT ...", user);
@@ -174,8 +175,9 @@ public class Communication extends Thread {
 			case TRANSAC_NO_DEST:
 				switch (command) {
 				case "RCPT TO":
-					 MsgServer.msgInfo("processing", "RCPT TO ...", user);
-					// etatCourant = requete.processingEhlo(params); TRANSAC_DEST
+					MsgServer.msgInfo("processing", "RCPT TO ...", user);
+					// etatCourant = requete.processingEhlo(params);
+					// TRANSAC_DEST
 					break;
 				case "QUIT":
 					MsgServer.msgInfo("processing", "QUIT ...", user);
@@ -191,11 +193,12 @@ public class Communication extends Thread {
 			case TRANSAC_DEST:
 				switch (command) {
 				case "RCPT TO":
-					 MsgServer.msgInfo("processing", "RCPT TO ...", user);
-					// etatCourant = requete.processingEhlo(params); TRANSAC_DEST
+					MsgServer.msgInfo("processing", "RCPT TO ...", user);
+					// etatCourant = requete.processingEhlo(params);
+					// TRANSAC_DEST
 					break;
 				case "DATA":
-					 MsgServer.msgInfo("processing", "DATA ...", user);
+					MsgServer.msgInfo("processing", "DATA ...", user);
 					// etatCourant = requete.processingEhlo(params); ECRI_MAIL
 					break;
 				case "QUIT":
@@ -210,13 +213,14 @@ public class Communication extends Thread {
 				}
 				break;
 			case ECRI_MAIL:
-				// Recupère chaine caractère jusqu'à <crlf>.<crlf> => MSG_ENVOYE
+				// Recupï¿½re chaine caractï¿½re jusqu'ï¿½ <crlf>.<crlf> => MSG_ENVOYE
 				break;
 			case MSG_ENVOYE:
 				switch (command) {
 				case "MAIL FROM":
-					 MsgServer.msgInfo("processing", "MAIL FROM ...", user);
-					// etatCourant = requete.processingEhlo(params); TRANSAC_NO_DEST
+					MsgServer.msgInfo("processing", "MAIL FROM ...", user);
+					// etatCourant = requete.processingEhlo(params);
+					// TRANSAC_NO_DEST
 					break;
 				case "QUIT":
 					MsgServer.msgInfo("processing", "QUIT ...", user);
@@ -248,7 +252,7 @@ public class Communication extends Thread {
 	 * Ferme les flux.
 	 *
 	 * @param stream
-	 *            flux qui va être fermé
+	 *            flux qui va ï¿½tre fermï¿½
 	 */
 	public void close(Object stream) {
 		if (stream == null) {
@@ -274,6 +278,7 @@ public class Communication extends Thread {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private String reponseOk(String msg) {
 		return "+OK " + msg;
 	}
