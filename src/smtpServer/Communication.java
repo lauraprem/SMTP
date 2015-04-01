@@ -98,9 +98,9 @@ public class Communication extends Thread {
 			System.out.println(user + " Error : " + ex.getMessage());
 			// erreur(500);
 		} finally {
-//			if (MsgServer.isUserFormat(user) && Lock.existUser(user)) {
-//				Lock.unlock(user);
-//			}
+			// if (MsgServer.isUserFormat(user) && Lock.existUser(user)) {
+			// Lock.unlock(user);
+			// }
 			close(in);
 			close(out);
 			close(outDonnees);
@@ -122,7 +122,7 @@ public class Communication extends Thread {
 
 		// Récupération et validation de la commande en fonction de l'état
 		// courrent
-		if (receive.length() >= 4) {  // si fin \r\n
+		if (receive.length() >= 4) { // si fin \r\n
 			String command = receive.substring(0, 4);
 			String params = receive.substring(4);
 			MsgServer.msgInfo("Command receive", command, user);
@@ -131,14 +131,15 @@ public class Communication extends Thread {
 			switch (etatCourant) {
 			case AUTHENTIFICATION:
 				switch (command) {
-				case "APOP":
-					MsgServer.msgInfo("processing", "APOP ...", user);
-//					etatCourant = requete.processingApop(params);
+				case "EHLO":
+					MsgServer.msgInfo("processing", "EHLO ...", user);
+					// etatCourant = requete.processingEhlo(params);
+					// //ETABL_TRANSAC
 
 					// Récupération des mails
-//					if (etatCourant == Etat.TRANSACTION) {
-//						user = requete.getApop().getUser();
-//					}
+					// if (etatCourant == Etat.ETABL_TRANSAC) {
+					// // user = requete.getApop().getUser();
+					// }
 					break;
 				case "QUIT":
 					MsgServer.msgInfo("processing", "QUIT ...", user);
@@ -155,9 +156,9 @@ public class Communication extends Thread {
 
 			case ETABL_TRANSAC:
 				switch (command) {
-				case "RETR":
-//					MsgServer.msgInfo("processing", "RETR ...", user);
-//					requete.processingRetr(params);
+				case "MAIL FROM":
+					 MsgServer.msgInfo("processing", "MAIL FROM ...", user);
+					// etatCourant = requete.processingEhlo(params); TRANSAC_NO_DEST
 					break;
 				case "QUIT":
 					MsgServer.msgInfo("processing", "QUIT ...", user);
@@ -172,25 +173,59 @@ public class Communication extends Thread {
 				break;
 			case TRANSAC_NO_DEST:
 				switch (command) {
+				case "RCPT TO":
+					 MsgServer.msgInfo("processing", "RCPT TO ...", user);
+					// etatCourant = requete.processingEhlo(params); TRANSAC_DEST
+					break;
+				case "QUIT":
+					MsgServer.msgInfo("processing", "QUIT ...", user);
+					isQuit = requete.processingQuit();
+					break;
 				default:
+					MsgServer
+							.msgWarnning("Unidentified command", command, user);
+					this.sendMsg(this.reponseKo("Unidentified command"));
 					break;
 				}
 				break;
 			case TRANSAC_DEST:
 				switch (command) {
+				case "RCPT TO":
+					 MsgServer.msgInfo("processing", "RCPT TO ...", user);
+					// etatCourant = requete.processingEhlo(params); TRANSAC_DEST
+					break;
+				case "DATA":
+					 MsgServer.msgInfo("processing", "DATA ...", user);
+					// etatCourant = requete.processingEhlo(params); ECRI_MAIL
+					break;
+				case "QUIT":
+					MsgServer.msgInfo("processing", "QUIT ...", user);
+					isQuit = requete.processingQuit();
+					break;
 				default:
+					MsgServer
+							.msgWarnning("Unidentified command", command, user);
+					this.sendMsg(this.reponseKo("Unidentified command"));
 					break;
 				}
 				break;
 			case ECRI_MAIL:
-				switch (command) {
-				default:
-					break;
-				}
+				// Recupère chaine caractère jusqu'à <crlf>.<crlf> => MSG_ENVOYE
 				break;
 			case MSG_ENVOYE:
 				switch (command) {
+				case "MAIL FROM":
+					 MsgServer.msgInfo("processing", "MAIL FROM ...", user);
+					// etatCourant = requete.processingEhlo(params); TRANSAC_NO_DEST
+					break;
+				case "QUIT":
+					MsgServer.msgInfo("processing", "QUIT ...", user);
+					isQuit = requete.processingQuit();
+					break;
 				default:
+					MsgServer
+							.msgWarnning("Unidentified command", command, user);
+					this.sendMsg(this.reponseKo("Unidentified command"));
 					break;
 				}
 				break;
@@ -239,50 +274,50 @@ public class Communication extends Thread {
 		}
 	}
 
-	private String reponseOk(String msg){
-		return "+OK "+msg;
-	}
-	
-	private String reponseKo(String msg){
-		return "-ERR "+msg;
+	private String reponseOk(String msg) {
+		return "+OK " + msg;
 	}
 
-	private boolean sendMsg(String msg){
-		return sendToClient(msg+"\r\n");
+	private String reponseKo(String msg) {
+		return "-ERR " + msg;
 	}
-	
-	private boolean sendToClient(String msg){
-		
+
+	private boolean sendMsg(String msg) {
+		return sendToClient(msg + "\r\n");
+	}
+
+	private boolean sendToClient(String msg) {
+
 		try {
 			outDonnees.write(msg.getBytes(), 0, (int) msg.getBytes().length);
 			outDonnees.flush();
 			MsgServer.msgInfo("Send", msg, user);
 			return true;
 		} catch (IOException e) {
-//			e.printStackTrace();
+			// e.printStackTrace();
 			MsgServer.msgError("IOException", e.getMessage(), user);
 			return false;
 		}
 	}
-	
-	private String readLine() throws IOException{
+
+	private String readLine() throws IOException {
 		InputStream ligneByte = socket.getInputStream();
-		String ligne="";
+		String ligne = "";
 		boolean isEndLine = false;
-		while(!isEndLine){
+		while (!isEndLine) {
 			int reading = ligneByte.read();
-			
-			if(reading == -1){
+
+			if (reading == -1) {
 				return null;
 			}
-			
-			ligne = ligne + (char)reading;
+
+			ligne = ligne + (char) reading;
 			isEndLine = ligne.contains(finRequete);
 		}
-		
+
 		String[] requeteString = ligne.split(finRequete);
-		
+
 		return requeteString[0];
 	}
-	
+
 }
