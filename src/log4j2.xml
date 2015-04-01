@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration package="log4j" status="WARN">
+	<Appenders>
+		<File name="MyFile" fileName="logs/app.log">
+			  <PatternLayout pattern="%d{HH:mm:ss.SSS} - [%-5level] - %msg%n"/>
+		</File>
+		<Async name="Async">
+			<AppenderRef ref="MyFile" />
+		</Async>
+	</Appenders>
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="Async" />
+		</Root>
+	</Loggers>
+</Configuration> 
