@@ -31,7 +31,7 @@ public class Communication extends Thread {
 	private String finRequete;
 	private Etat etatCourant;
 	private String user;
-	private boolean requeteData;
+	private String [] users;
 
 	private static final int uneMinute = 60000;
 
@@ -76,7 +76,7 @@ public class Communication extends Thread {
 			outDonnees.flush();
 			MsgServer.msgInfo("Send", msg, user);
 
-			// Permet de savoir si la connexion est � cl�turer
+			// Permet de savoir si la connexion est  clôturer
 			boolean isQuit = false;
 			while (!isQuit) {
 
@@ -200,7 +200,7 @@ public class Communication extends Thread {
 							break;
 						case "DATA":
 							MsgServer.msgInfo("processing", "DATA ...", user);
-							etatCourant = requete.processingData();
+							etatCourant = requete.PrecessingDefault(users);
 							break;
 						case "QUIT":
 							MsgServer.msgInfo("processing", "QUIT ...", user);
@@ -215,12 +215,8 @@ public class Communication extends Thread {
 					
 				break;
 			case ECRI_MAIL:
-				// Recup�re chaine caract�re jusqu'� <crlf>.<crlf> => MSG_ENVOYE
-				if((command+params).equals(finRequete+"."+ finRequete)){
-					requeteData = false;
-					//etatCourant = 
-				}
-				
+				String data = command+params;
+				etatCourant = requete.PrecessingReceiveData(data);			
 				break;
 			case MSG_ENVOYE:
 				switch (command) {

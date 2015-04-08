@@ -16,7 +16,7 @@ public class ActionDATA extends ActionType {
 		super(outDonnees);
 	}
 
-	public Etat PrecessingData() {
+	public Etat PrecessingData(String[] users) {
 		String msg;
 		
 		msg = super.reponseOk("354");

@@ -42,14 +42,19 @@ public abstract class ActionType {
 		this.outDonnees = outDonnees;
 	}
 
-	protected String reponseOk(String msg) {
+	protected String reponseOk(String num) {
 		// TODO construire r�ponse ok
-		return "+OK " + msg;
+		return num + " OK";
+	}
+	
+	protected String reponseOkEhlo(String num, String msg) {
+		// TODO construire r�ponse ok
+		return num + "-"+msg;
 	}
 
-	protected String reponseKo(String msg) {
-		// TODO construire r�ponse ko
-		return "-ERR " + msg;
+	protected String reponseKo(String num, String msg) {
+		// TODO construiréponse ko
+		return num +" "+msg;
 	}
 	
 

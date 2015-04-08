@@ -102,8 +102,12 @@ public class Requete {
 		return quit.PrecessingQuit();
 	}
 	
-	public Etat processingData() {
-		return data.PrecessingData();
+	public Etat PrecessingDefault(String[] users) {
+		return data.PrecessingData(users);
+	}
+	
+	public Etat PrecessingReceiveData(String dataExempl) {
+		return data.PrecessingReceiveData(dataExempl);
 	}
 	
 //	 PrecessingReceiveData(String data) 
