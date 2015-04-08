@@ -42,22 +42,22 @@ public abstract class ActionType {
 		// TODO construire r�ponse ok
 		return num + " OK";
 	}
-	
+
 	protected String reponseOkEhlo(String num, String msg) {
 		// TODO construire r�ponse ok
-		return num + "-"+msg;
+		return num + "-" + msg;
 	}
 
 	protected String reponseKo(String num, String msg) {
 		// TODO construiréponse ko
-		return num +" "+msg;
+		return num + " " + msg;
 	}
 
 	protected boolean sendMsg(String msg) {
 		return sendToClient(msg + "\r\n");
 	}
 
-	protected boolean sendToClient(String msg) {
+	private boolean sendToClient(String msg) {
 
 		try {
 			outDonnees.write(msg.getBytes(), 0, (int) msg.getBytes().length);

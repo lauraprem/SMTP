@@ -33,7 +33,6 @@ public class Communication extends Thread {
 	private String user;
 	private String[] users;
 
-
 	private static final int uneMinute = 60000;
 
 	public Communication(Socket connexion) {
@@ -76,7 +75,6 @@ public class Communication extends Thread {
 			outDonnees.write(msg.getBytes(), 0, (int) msg.getBytes().length);
 			outDonnees.flush();
 			MsgServer.msgInfo("Send", msg, user);
-
 
 			// Permet de savoir si la connexion est clôturer
 
@@ -138,12 +136,6 @@ public class Communication extends Thread {
 				case "EHLO":
 					MsgServer.msgInfo("processing", "EHLO ...", user);
 					etatCourant = requete.processingEhlo(params);
-					// //ETABL_TRANSAC
-
-					// R�cup�ration des mails
-					// if (etatCourant == Etat.ETABL_TRANSAC) {
-					// // user = requete.getApop().getUser();
-					// }
 					break;
 				case "QUIT":
 					MsgServer.msgInfo("processing", "QUIT ...", user);
