@@ -52,6 +52,10 @@ public class Mail implements Serializable {
 	public void setListHeader(ArrayList<String> listHeader) {
 		this.listHeader = listHeader;
 	}
+	
+	public void addHeader(String header) {
+		this.listHeader.add(header);
+	}
 
 	public String getEndMsg() {
 		return endMsg;
@@ -67,6 +71,10 @@ public class Mail implements Serializable {
 
 	public void setListLine(ArrayList<String> listLine) {
 		this.listLine = listLine;
+	}
+	
+	public void addLine(String line) {
+		this.listLine.add(line);
 	}
 
 	public String getEndLine() {
