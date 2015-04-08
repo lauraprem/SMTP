@@ -102,9 +102,11 @@ public class Requete {
 		return quit.PrecessingQuit();
 	}
 
+	
 	public Etat PrecessingDefault(String[] users) {
 		return data.PrecessingData(users);
 	}
+
 	
 	public Etat PrecessingReceiveData(String dataExempl) {
 		return data.PrecessingReceiveData(dataExempl);

@@ -33,6 +33,7 @@ public class Communication extends Thread {
 	private String user;
 	private String[] users;
 
+
 	private static final int uneMinute = 60000;
 
 	public Communication(Socket connexion) {
@@ -76,7 +77,9 @@ public class Communication extends Thread {
 			outDonnees.flush();
 			MsgServer.msgInfo("Send", msg, user);
 
+
 			// Permet de savoir si la connexion est clôturer
+
 			boolean isQuit = false;
 			while (!isQuit) {
 
@@ -212,11 +215,11 @@ public class Communication extends Thread {
 					this.sendMsg(this.reponseKo("Unidentified command"));
 					break;
 				}
-
 				break;
 			case ECRI_MAIL:
 				String data = command + params;
 				etatCourant = requete.PrecessingReceiveData(data);
+
 				break;
 			case MSG_ENVOYE:
 				switch (command) {

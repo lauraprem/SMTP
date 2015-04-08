@@ -14,17 +14,23 @@ public class ActionEHLO extends ActionType {
 		super(outDonnees);
 	}
 
-	public Etat PrecessingDefault() {
-
-		String msg;
-
-		// Envoi du message au client
-		// msg = super.reponseOk("POP3 server signing off");
-		// if (sendMsg(msg)) {
-		// return true;
-		// }
-		//
-		// return false;
-		return null;
+	public Etat ProcessingEhlo(String params) {
+		String msg = "250-lauco greets" + params;
+		super.reponseOk(msg);
+		return Etat.ETABL_TRANSAC;
 	}
+
+	// public Etat PrecessingDefault() {
+	//
+	// String msg;
+
+	// Envoi du message au client
+	// msg = super.reponseOk("POP3 server signing off");
+	// if (sendMsg(msg)) {
+	// return true;
+	// }
+	//
+	// return false;
+	// return null;
+	// }
 }
