@@ -7,7 +7,11 @@ import smtpServer.Etat;
 import util.MsgServer.MsgServer;
 
 /**
+<<<<<<< HEAD
  * Actions types réalisées par le serveur, classe mère des réactions au différentes requetes 
+=======
+ * Actions types r�alis�es par le serveur, classe m�re des r�actions au diff�rentes requetes 
+>>>>>>> branch 'master' of https://github.com/lauraprem/SMTP.git
  * @author Corinne & Laura
  *
  */
@@ -21,7 +25,7 @@ public abstract class ActionType {
 		this.outDonnees = outDonnees;
 		user = null;
 	}
-	
+
 	public String getUser() {
 		return user;
 	}
@@ -38,21 +42,23 @@ public abstract class ActionType {
 		this.outDonnees = outDonnees;
 	}
 
-	protected String reponseOk(String msg){
-		//TODO construire réponse ok
-		return msg+" OK";
-	}
-	
-	protected String reponseKo(String msg){
-		return msg;
+	protected String reponseOk(String msg) {
+		// TODO construire r�ponse ok
+		return "+OK " + msg;
 	}
 
-	protected boolean sendMsg(String msg){
-		return sendToClient(msg+"\r\n");
+	protected String reponseKo(String msg) {
+		// TODO construire r�ponse ko
+		return "-ERR " + msg;
 	}
 	
-	protected boolean sendToClient(String msg){
-		
+
+	protected boolean sendMsg(String msg) {
+		return sendToClient(msg + "\r\n");
+	}
+
+	protected boolean sendToClient(String msg) {
+
 		try {
 			outDonnees.write(msg.getBytes(), 0, (int) msg.getBytes().length);
 			outDonnees.flush();

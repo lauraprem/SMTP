@@ -12,24 +12,25 @@ public class ActionQUIT extends ActionType {
 		super(outDonnees);
 	}
 
-	public boolean PrecessingDefault() {
+	public boolean PrecessingQuit() {
 		// TODO A enlever ou laisser si static (voir avec Laura)
-		// Libération du verrou s'il est à libérer
+		// Libï¿½ration du verrou s'il est ï¿½ libï¿½rer
 		String msg;
-//		if (user == null || user == "" ||!Lock.existUser(user)||Lock.unlock(user) != LockStates.ERROR) {
+		// if (user == null || user == ""
+		// ||!Lock.existUser(user)||Lock.unlock(user) != LockStates.ERROR) {
 
-			// Envoi du message au client
-			msg = super.reponseOk("POP3 server signing off");
-			if (sendMsg(msg)) {
-				return true;
-			}
+		// Envoi du message au client
+		msg = super.reponseOk("POP3 server signing off");
+		if (sendMsg(msg)) {
+			return true;
+		}
 
-			return false;
-//		} else {
-//			// TODO msg error
-//			// msg = super.reponseKo("Error lors du deverouillage");
-//			System.out.println("erreur lors du déverouillage");
-//			return false;
-//		}
+		return false;
+		// } else {
+		// // TODO msg error
+		// // msg = super.reponseKo("Error lors du deverouillage");
+		// System.out.println("erreur lors du dï¿½verouillage");
+		// return false;
+		// }
 	}
 }

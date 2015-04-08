@@ -108,4 +108,7 @@ public class Requete {
 	
 //	 PrecessingReceiveData(String data) 
 
+	public Etat processingEhlo() {
+		return ehlo.PrecessingDefault();
+	}
 }
