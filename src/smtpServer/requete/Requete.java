@@ -101,14 +101,18 @@ public class Requete {
 	public boolean processingQuit() {
 		return quit.PrecessingQuit();
 	}
-	
-	public Etat processingData() {
-		return data.PrecessingData();
+
+	public Etat PrecessingDefault(String[] users) {
+		return data.PrecessingData(users);
 	}
 	
-//	 PrecessingReceiveData(String data) 
+	public Etat PrecessingReceiveData(String dataExempl) {
+		return data.PrecessingReceiveData(dataExempl);
+	}
 
-	public Etat processingEhlo() {
-		return ehlo.PrecessingDefault();
+	// PrecessingReceiveData(String data)
+
+	public Etat processingEhlo(String params) {
+		return ehlo.ProcessingEhlo(params);
 	}
 }
