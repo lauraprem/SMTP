@@ -31,6 +31,7 @@ public class Communication extends Thread {
 	private String finRequete;
 	private Etat etatCourant;
 	private String user;
+	private boolean requeteData;
 
 	private static final int uneMinute = 60000;
 
@@ -191,29 +192,35 @@ public class Communication extends Thread {
 				}
 				break;
 			case TRANSAC_DEST:
-				switch (command) {
-				case "RCPT TO":
-					MsgServer.msgInfo("processing", "RCPT TO ...", user);
-					// etatCourant = requete.processingEhlo(params);
-					// TRANSAC_DEST
-					break;
-				case "DATA":
-					MsgServer.msgInfo("processing", "DATA ...", user);
-					// etatCourant = requete.processingEhlo(params); ECRI_MAIL
-					break;
-				case "QUIT":
-					MsgServer.msgInfo("processing", "QUIT ...", user);
-					isQuit = requete.processingQuit();
-					break;
-				default:
-					MsgServer
-							.msgWarnning("Unidentified command", command, user);
-					this.sendMsg(this.reponseKo("Unidentified command"));
-					break;
-				}
+					switch (command) {
+						case "RCPT TO":
+							MsgServer.msgInfo("processing", "RCPT TO ...", user);
+							// etatCourant = requete.processingEhlo(params);
+							// TRANSAC_DEST
+							break;
+						case "DATA":
+							MsgServer.msgInfo("processing", "DATA ...", user);
+							etatCourant = requete.processingData();
+							break;
+						case "QUIT":
+							MsgServer.msgInfo("processing", "QUIT ...", user);
+							isQuit = requete.processingQuit();
+							break;
+						default:
+							MsgServer
+									.msgWarnning("Unidentified command", command, user);
+							this.sendMsg(this.reponseKo("Unidentified command"));
+							break;
+						}
+					
 				break;
 			case ECRI_MAIL:
 				// Recup�re chaine caract�re jusqu'� <crlf>.<crlf> => MSG_ENVOYE
+				if((command+params).equals(finRequete+"."+ finRequete)){
+					requeteData = false;
+					//etatCourant = 
+				}
+				
 				break;
 			case MSG_ENVOYE:
 				switch (command) {

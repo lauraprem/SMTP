@@ -2,34 +2,36 @@ package smtpServer.requete;
 
 import java.io.BufferedOutputStream;
 
+import smtpServer.Etat;
+
 /**
  *
  * @author Corinne & Laura
  */
 public class ActionDATA extends ActionType {
+	
+	private String stringMail;
 
 	public ActionDATA(BufferedOutputStream outDonnees) {
 		super(outDonnees);
 	}
 
-	public boolean PrecessingDefault() {
-		// TODO A enlever ou laisser si static (voir avec Laura)
-		// Libération du verrou s'il est à libérer
+	public Etat PrecessingData() {
 		String msg;
-//		if (user == null || user == "" ||!Lock.existUser(user)||Lock.unlock(user) != LockStates.ERROR) {
-
-			// Envoi du message au client
-			msg = super.reponseOk("POP3 server signing off");
-			if (sendMsg(msg)) {
-				return true;
-			}
-
-			return false;
-//		} else {
-//			// TODO msg error
-//			// msg = super.reponseKo("Error lors du deverouillage");
-//			System.out.println("erreur lors du déverouillage");
-//			return false;
-//		}
+		
+		msg = super.reponseOk("354");
+		if (sendMsg(msg)) {
+			stringMail = "";
+			return Etat.ECRI_MAIL;
+		}
+		return Etat.TRANSAC_DEST;
+	}
+	
+	public Etat PrecessingReceiveData(String data) {
+		if (data.contains("\r\n"+"."+"\r\n")) {
+			stringMail = stringMail + data;
+			return Etat.ECRI_MAIL;
+		}
+		return Etat.MSG_ENVOYE;
 	}
 }

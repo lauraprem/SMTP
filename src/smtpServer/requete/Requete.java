@@ -2,6 +2,7 @@ package smtpServer.requete;
 
 import java.io.BufferedOutputStream;
 
+import smtpServer.Etat;
 import util.FileMails.FileMails;
 
 public class Requete {
@@ -19,6 +20,10 @@ public class Requete {
 
 	public Requete(BufferedOutputStream outDonnees) {
 		super();
+		ehlo = new ActionEHLO(outDonnees);
+		mail = new ActionMAIL(outDonnees);
+		rctp = new ActionRCPT(outDonnees);
+		data = new ActionDATA(outDonnees);
 		quit = new ActionQUIT(outDonnees);
 		fileMails = null;
 	}
@@ -94,7 +99,13 @@ public class Requete {
 	}
 
 	public boolean processingQuit() {
-		return quit.PrecessingDefault();
+		return quit.PrecessingQuit();
 	}
+	
+	public Etat processingData() {
+		return data.PrecessingData();
+	}
+	
+//	 PrecessingReceiveData(String data) 
 
 }

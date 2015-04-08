@@ -3,10 +3,11 @@ package smtpServer.requete;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 
+import smtpServer.Etat;
 import util.MsgServer.MsgServer;
 
 /**
- * Actions types réalisées par le serveur, classe mère des réactions au différentes requetes 
+ * Actions types rÃ©alisÃ©es par le serveur, classe mÃ¨re des rÃ©actions au diffÃ©rentes requetes 
  * @author Corinne & Laura
  *
  */
@@ -38,13 +39,12 @@ public abstract class ActionType {
 	}
 
 	protected String reponseOk(String msg){
-		//TODO construire réponse ok
-		return "+OK "+msg;
+		//TODO construire rÃ©ponse ok
+		return msg+" OK";
 	}
 	
 	protected String reponseKo(String msg){
-		//TODO construire réponse ko
-		return "-ERR "+msg;
+		return msg;
 	}
 
 	protected boolean sendMsg(String msg){
@@ -59,16 +59,14 @@ public abstract class ActionType {
 			MsgServer.msgInfo("Send", msg, user);
 			return true;
 		} catch (IOException e) {
-//			e.printStackTrace();
+			// e.printStackTrace();
 			MsgServer.msgError("IOException", e.getMessage(), user);
 			return false;
 		}
 	}
-	
-	
-	protected boolean PrecessingDefault(){
-		return true;
-	}
 
+	protected Etat PrecessingDefault() {
+		return Etat.AUTHENTIFICATION;
+	}
 
 }
