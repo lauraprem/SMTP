@@ -1,9 +1,7 @@
 package serverPop3.requete;
 
 import java.io.BufferedOutputStream;
-import java.util.ArrayList;
 
-import serverPop3.Etat;
 import util.Lock.Lock;
 import util.Lock.LockStates;
 
@@ -18,10 +16,9 @@ public class ActionQUIT extends ActionType {
 	}
 
 	public boolean PrecessingDefault() {
-		// TODO A enlever ou laisser si static (voir avec Laura)
-		// Libération du verrou s'il est à libérer
 		String msg;
-		if (user == null || user == "" ||!Lock.existUser(user)||Lock.unlock(user) != LockStates.ERROR) {
+		if (user == null || user == "" || !Lock.existUser(user)
+				|| Lock.unlock(user) != LockStates.ERROR) {
 
 			// Envoi du message au client
 			msg = super.reponseOk("POP3 server signing off");
@@ -31,9 +28,6 @@ public class ActionQUIT extends ActionType {
 
 			return false;
 		} else {
-			// TODO msg error
-			// msg = super.reponseKo("Error lors du deverouillage");
-			System.out.println("erreur lors du déverouillage");
 			return false;
 		}
 	}

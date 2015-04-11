@@ -24,28 +24,6 @@ public class Requete {
 		quit = new ActionQUIT(outDonnees);
 	}
 
-	// public void setUserRequete() {
-	// String user = apop.getUser();
-	// if (user != null) {
-	// quit.setUser(user);
-	// retr.setUser(user);
-	//
-	// fileMails = new FileMails(user, EXTENSION_MAIL, MAIL_PATH + user
-	// + "/");
-	// // TODO A enlever le save
-	// // fileMails.saveMails();
-	// fileMails.extractMails();
-	// }
-	// }
-
-	// public Etat processingApop(String params) {
-	// Etat etat = apop.Apop(params);
-	// if (etat == Etat.TRANSACTION) {
-	// setUserRequete();
-	// }
-	// return etat;
-	// }
-
 	public ActionEHLO getEhlo() {
 		return ehlo;
 	}
@@ -109,9 +87,9 @@ public class Requete {
 			String params) {
 		return mail.processingMail(expediteur, destinataires, mails, params);
 	}
-	
+
 	public Etat processingRcpt(ArrayList<StringContainer> destinataires,
 			String params) {
-		return rctp.processingRcpt(destinataires,params);
+		return rctp.processingRcpt(destinataires, params);
 	}
 }

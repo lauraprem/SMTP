@@ -1,7 +1,6 @@
 package serverPop3.requete;
 
 import java.io.BufferedOutputStream;
-import java.io.File;
 
 import serverPop3.Etat;
 import util.Lock.Lock;
@@ -24,18 +23,15 @@ public class ActionAPOP extends ActionType {
 	}
 
 	public Etat Apop(String params) {
-		// TODO authentfication + verif user cas user null
 
 		this.user = retrieveUser(params);
 		// this.mail = new File(Requete.MAIL_PATH + this.user
 		// + Requete.EXTENSION_MAIL);
-		if(user == null || user == "")
-		{
+		if (user == null || user == "") {
 			super.sendMsg(super.reponseKo("no user was passed."));
 			return Etat.AUTORISATION;
 		}
-		if(!Lock.existUser(user))
-		{
+		if (!Lock.existUser(user)) {
 			super.sendMsg(super.reponseKo("the user doesn't exists."));
 			return Etat.AUTORISATION;
 		}

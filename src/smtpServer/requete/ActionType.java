@@ -39,17 +39,14 @@ public abstract class ActionType {
 	}
 
 	protected String reponseOk(String num) {
-		// TODO construire r�ponse ok
 		return num + " OK";
 	}
 
 	protected String reponseOkEhlo(String num, String msg) {
-		// TODO construire r�ponse ok
 		return num + "-" + msg;
 	}
 
 	protected String reponseKo(String num, String msg) {
-		// TODO construiréponse ko
 		return num + " " + msg;
 	}
 

@@ -27,11 +27,10 @@ public class ActionRCPT extends ActionType {
 			if (super.sendMsg(super.reponseOk("250"))) {
 				return Etat.TRANSAC_DEST;
 			}
-		} else
-		
-		if (params == null || params.equals("")){
-			super.sendMsg(super.reponseKo("553","Aucun desctinataire en parametre"));
-		}else{
+		} else if (params == null || params.equals("")) {
+			super.sendMsg(super.reponseKo("553",
+					"Aucun desctinataire en parametre"));
+		} else {
 			super.sendMsg(super.reponseKo("553", "destinataire invalide"));
 		}
 		return Etat.TRANSAC_NO_DEST;

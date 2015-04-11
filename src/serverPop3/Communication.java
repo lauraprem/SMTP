@@ -82,8 +82,8 @@ public class Communication extends Thread {
 			while (!isQuit) {
 
 				// recupere la premiere ligne de la requete du client
-//				String ligne = in.readLine();
-				String ligne = readLine(); //in.readLine();
+				// String ligne = in.readLine();
+				String ligne = readLine(); // in.readLine();
 				// if(user.equals(socket))
 				MsgServer.msgInfo("Request receive", ligne, user);
 
@@ -96,7 +96,7 @@ public class Communication extends Thread {
 
 		} catch (SocketTimeoutException e) {
 			System.out.println(user + " time_out dépassé : " + e.getMessage());
-			// TODO gestion erreur
+
 			// erreur(408);
 		} catch (IOException ex) {
 			System.out.println(user + " Error : " + ex.getMessage());
@@ -211,7 +211,6 @@ public class Communication extends Thread {
 			} else if (stream instanceof Socket) {
 				((Socket) stream).close();
 			} else {
-				// TODO gestion erreur
 				System.err.println("Unable to close object: " + stream);
 			}
 		} catch (Exception e) {
@@ -219,50 +218,50 @@ public class Communication extends Thread {
 		}
 	}
 
-	private String reponseOk(String msg){
-		return "+OK "+msg;
-	}
-	
-	private String reponseKo(String msg){
-		return "-ERR "+msg;
+	private String reponseOk(String msg) {
+		return "+OK " + msg;
 	}
 
-	private boolean sendMsg(String msg){
-		return sendToClient(msg+"\r\n");
+	private String reponseKo(String msg) {
+		return "-ERR " + msg;
 	}
-	
-	private boolean sendToClient(String msg){
-		
+
+	private boolean sendMsg(String msg) {
+		return sendToClient(msg + "\r\n");
+	}
+
+	private boolean sendToClient(String msg) {
+
 		try {
 			outDonnees.write(msg.getBytes(), 0, (int) msg.getBytes().length);
 			outDonnees.flush();
 			MsgServer.msgInfo("Send", msg, user);
 			return true;
 		} catch (IOException e) {
-//			e.printStackTrace();
+			// e.printStackTrace();
 			MsgServer.msgError("IOException", e.getMessage(), user);
 			return false;
 		}
 	}
-	
-	private String readLine() throws IOException{
+
+	private String readLine() throws IOException {
 		InputStream ligneByte = socket.getInputStream();
-		String ligne="";
+		String ligne = "";
 		boolean isEndLine = false;
-		while(!isEndLine){
+		while (!isEndLine) {
 			int reading = ligneByte.read();
-			
-			if(reading == -1){
+
+			if (reading == -1) {
 				return null;
 			}
-			
-			ligne = ligne + (char)reading;
+
+			ligne = ligne + (char) reading;
 			isEndLine = ligne.contains(finRequete);
 		}
-		
+
 		String[] requeteString = ligne.split(finRequete);
-		
+
 		return requeteString[0];
 	}
-	
+
 }
