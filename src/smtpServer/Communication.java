@@ -172,7 +172,10 @@ public class Communication extends Thread {
 				break;
 
 			case ETABL_TRANSAC:
-				command = receiveCommandMailFrom(command, params);
+				// Mise à jour des params
+				ArrayList<String> commandParams = receiveCommandMailFrom(command, params);
+				command = commandParams.get(0);
+				params = commandParams.get(1);
 				
 				switch (command) {
 				case "MAIL FROM":
@@ -247,7 +250,9 @@ public class Communication extends Thread {
 
 				break;
 			case MSG_ENVOYE:
-				command = receiveCommandMailFrom(command, params);
+				ArrayList<String> commandParams2 = receiveCommandMailFrom(command, params);
+				command = commandParams2.get(0);
+				params = commandParams2.get(1);
 				
 				switch (command) {
 				case "MAIL FROM":
@@ -365,16 +370,19 @@ public class Communication extends Thread {
 	
 	/**
 	 * Récupération du from s'il existe
-	 * @return command MAIL FROM sinon MAIL
+	 * @return command MAIL FROM et le params sinon MAIL et params
 	 */
-	private String receiveCommandMailFrom(String command, String params){
+	private ArrayList<String> receiveCommandMailFrom(String command, String params){
+		ArrayList<String> commandParams = new ArrayList<String>();
 		if(command.equals("MAIL")){
 			if(params.startsWith(" FROM") == true){
 				command = command+" FROM";
-				params = params.split(" FROM")[0];
+				params = params.replaceFirst(" FROM", "");
 			}
+			commandParams.add(command);
+			commandParams.add(params);
 		}
-		return command;
+		return commandParams;
 	}
 
 }
