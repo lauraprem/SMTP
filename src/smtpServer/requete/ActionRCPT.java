@@ -1,8 +1,10 @@
 package smtpServer.requete;
 
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.util.ArrayList;
 
+import serverPop3.requete.Requete;
 import smtpServer.Etat;
 import util.StringContainer;
 
@@ -18,6 +20,18 @@ public class ActionRCPT extends ActionType {
 
 	public Etat processingRcpt(ArrayList<StringContainer> destinataires,
 			String params) {
-		return null;
+		if (existUser(params)) {
+			destinataires.add(new StringContainer(params));
+			if (super.sendMsg(super.reponseOk("250"))) {
+				return Etat.TRANSAC_DEST;
+			}
+		}
+		super.sendMsg(super.reponseKo("250", "Action demandée non effectuée "));
+		return Etat.TRANSAC_NO_DEST;
+	}
+
+	public static boolean existUser(String user) {
+		File userFolder = new File(Requete.MAIL_PATH + user.toUpperCase());
+		return userFolder.exists();
 	}
 }
