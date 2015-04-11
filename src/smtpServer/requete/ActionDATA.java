@@ -58,7 +58,7 @@ public class ActionDATA extends ActionType {
 			// Enregistrer dans les boîtes des users
 			String location = fileMails.getLocation();
 			for (int i = 0; i < users.size(); i++) {
-				FileMails fileMailsTmp = fileMails;
+				FileMails fileMailsTmp = new FileMails(".txt",fileMails.getLocation());
 				fileMailsTmp.setName(users.get(i).getString());
 				fileMailsTmp.setLocation(location+users.get(i).getString()+'/');
 				fileMailsTmp.extractMails();
