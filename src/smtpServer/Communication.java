@@ -47,7 +47,7 @@ public class Communication extends Thread {
 		socket = connexion;
 		expediteur = new StringContainer();
 		expediteur.setString(socket.toString());
-
+		destinataires = new ArrayList<StringContainer>();
 		try {
 			socket.setSoTimeout(SO_TIMEOUT);
 		} catch (SocketException ex) {
@@ -141,15 +141,16 @@ public class Communication extends Thread {
 		if (receive.length() >= 4) { // si fin \r\n
 			String command = receive.substring(0, 4);
 			String params = receive.substring(4);
-			
+
 			// Mise à jour des params
-			ArrayList<String> commandParams = receiveCommandMailFrom(command, params);
+			ArrayList<String> commandParams = receiveCommandMailFrom(command,
+					params);
 			command = commandParams.get(0);
 			params = commandParams.get(1);
 			commandParams = receiveCommandRcptTo(command, params);
 			command = commandParams.get(0);
 			params = commandParams.get(1);
-			
+
 			MsgServer.msgInfo("Command receive", command,
 					expediteur.getString());
 			MsgServer.msgInfo("Params receive", params, expediteur.getString());
@@ -206,7 +207,7 @@ public class Communication extends Thread {
 				case "RCPT TO":
 					MsgServer.msgInfo("processing", "RCPT TO ...",
 							expediteur.getString());
-					 etatCourant = requete.processingRcpt(destinataires, params);
+					etatCourant = requete.processingRcpt(destinataires, params);
 					// TRANSAC_DEST
 					break;
 				case "QUIT":
@@ -367,40 +368,41 @@ public class Communication extends Thread {
 
 		return requeteString[0];
 	}
-	
+
 	/**
 	 * Récupération du from s'il existe
 	 * @return command MAIL FROM et le params sinon MAIL et params
 	 */
-	private ArrayList<String> receiveCommandMailFrom(String command, String params){
+	private ArrayList<String> receiveCommandMailFrom(String command,
+			String params) {
 		ArrayList<String> commandParams = new ArrayList<String>();
-		if(command.equals("MAIL")){
-			if(params.startsWith(" FROM") == true){
-				command = command+" FROM";
+		if (command.equals("MAIL")) {
+			if (params.startsWith(" FROM") == true) {
+				command = command + " FROM";
 				params = params.replaceFirst(" FROM", "");
 			}
 		}
 		commandParams.add(command);
 		commandParams.add(params);
-		
+
 		return commandParams;
 	}
-	
+
 	/**
 	 * Récupération du from s'il existe
 	 * @return command RCPT TO et le params sinon RCPT et params
 	 */
-	private ArrayList<String> receiveCommandRcptTo(String command, String params){
+	private ArrayList<String> receiveCommandRcptTo(String command, String params) {
 		ArrayList<String> commandParams = new ArrayList<String>();
-		if(command.equals("RCPT")){
-			if(params.startsWith(" TO") == true){
-				command = command+" TO";
+		if (command.equals("RCPT")) {
+			if (params.startsWith(" TO") == true) {
+				command = command + " TO";
 				params = params.replaceFirst(" TO", "");
 			}
 		}
 		commandParams.add(command);
 		commandParams.add(params);
-		
+
 		return commandParams;
 	}
 
