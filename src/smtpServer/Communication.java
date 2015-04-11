@@ -36,12 +36,18 @@ public class Communication extends Thread {
 	private StringContainer expediteur;
 	private ArrayList<StringContainer> destinaires;
 	private FileMails data;
+	
+	public static final String EXTENSION_MAIL = ".txt";
+	public static final String MAIL_PATH = "./StockMail/";
 
 	private static final int uneMinute = 60000;
 
 	public Communication(Socket connexion) {
 		SO_TIMEOUT = 10 * uneMinute;
 		socket = connexion;
+		expediteur= new StringContainer();
+		expediteur.setString(socket.toString());
+		
 		try {
 			socket.setSoTimeout(SO_TIMEOUT);
 		} catch (SocketException ex) {
@@ -57,8 +63,8 @@ public class Communication extends Thread {
 
 		// Autre
 		requete = null;
+		data = new FileMails(EXTENSION_MAIL,MAIL_PATH);
 		finRequete = "\r\n";
-		expediteur.setString(socket.toString());
 		etatCourant = Etat.AUTHENTIFICATION;
 	}
 
@@ -73,8 +79,8 @@ public class Communication extends Thread {
 					socket.getInputStream()));
 			outDonnees = new BufferedOutputStream(socket.getOutputStream());
 
-			requete = new Requete(outDonnees);
-
+			requete = new Requete(outDonnees);			
+			
 			// Envoi Message de bienvenue
 			String msg = "220 lauco.com Simple Mail Transfer" + finRequete;
 			outDonnees.write(msg.getBytes(), 0, (int) msg.getBytes().length);
@@ -99,7 +105,7 @@ public class Communication extends Thread {
 			}
 
 		} catch (SocketTimeoutException e) {
-			System.out.println(expediteur.getString() + " time_out d�pass� : "
+			System.out.println(expediteur.getString() + " time_out dépassé : "
 					+ e.getMessage());
 			// TODO gestion erreur
 			// erreur(408);
@@ -146,6 +152,9 @@ public class Communication extends Thread {
 					MsgServer.msgInfo("processing", "EHLO ...",
 							expediteur.getString());
 					etatCourant = requete.processingEhlo(params);
+					if(etatCourant.equals(Etat.ETABL_TRANSAC)){
+						expediteur.setString(params);
+					}
 					break;
 				case "QUIT":
 					MsgServer.msgInfo("processing", "QUIT ...",

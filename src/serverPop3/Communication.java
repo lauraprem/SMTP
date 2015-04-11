@@ -95,7 +95,7 @@ public class Communication extends Thread {
 			}
 
 		} catch (SocketTimeoutException e) {
-			System.out.println(user + " time_out d�pass� : " + e.getMessage());
+			System.out.println(user + " time_out dépassé : " + e.getMessage());
 			// TODO gestion erreur
 			// erreur(408);
 		} catch (IOException ex) {

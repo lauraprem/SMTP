@@ -18,6 +18,7 @@ public class ActionDATA extends ActionType {
 	private boolean endLine;
 	private String finRequete;
 	private ArrayList<StringContainer> users;
+	private FileMails fileMails;
 
 	public ActionDATA(BufferedOutputStream outDonnees) {
 		super(outDonnees);
@@ -33,6 +34,7 @@ public class ActionDATA extends ActionType {
 			mail = new Mail();
 			endLine = false;
 			this.users = users;
+			this.fileMails = fileMails;
 			return Etat.ECRI_MAIL;
 		}
 
@@ -51,8 +53,13 @@ public class ActionDATA extends ActionType {
 		}
 
 		if (data.contains(finRequete + "." + finRequete)) {
-			// Enregistrer dans les boites des users
-
+			
+			// Enregistrer dans les boîtes des users
+			for (int i = 0; i < users.size(); i++) {
+				fileMails.setName(users.get(i).getString());
+				fileMails.saveMails();
+			}
+			
 			return Etat.MSG_ENVOYE;
 		} else {
 			return Etat.ECRI_MAIL;

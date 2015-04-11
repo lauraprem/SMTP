@@ -8,12 +8,7 @@ import util.StringContainer;
 import util.FileMails.FileMails;
 
 public class Requete {
-
-	public static final String EXTENSION_MAIL = ".txt";
-	public static final String MAIL_PATH = "./StockMail/";
-
-	private FileMails fileMails;
-
+	
 	private ActionEHLO ehlo;
 	private ActionMAIL mail;
 	private ActionRCPT rctp;
@@ -27,7 +22,6 @@ public class Requete {
 		rctp = new ActionRCPT(outDonnees);
 		data = new ActionDATA(outDonnees);
 		quit = new ActionQUIT(outDonnees);
-		fileMails = null;
 	}
 
 	// public void setUserRequete() {
@@ -51,14 +45,6 @@ public class Requete {
 	// }
 	// return etat;
 	// }
-
-	public FileMails getFileMails() {
-		return fileMails;
-	}
-
-	public void setFileMails(FileMails fileMails) {
-		this.fileMails = fileMails;
-	}
 
 	public ActionEHLO getEhlo() {
 		return ehlo;

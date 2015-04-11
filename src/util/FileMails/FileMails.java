@@ -39,6 +39,14 @@ public class FileMails implements Serializable {
 		this.location = location;
 		this.listMail = new ArrayList<Mail>();
 	}
+	
+	public FileMails(String extension, String location) {
+		super();
+		this.name = null;
+		this.extension = extension;
+		this.location = location;
+		this.listMail = new ArrayList<Mail>();
+	}
 
 	// METHODES
 	public String getName() {
