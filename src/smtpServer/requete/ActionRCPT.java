@@ -22,13 +22,18 @@ public class ActionRCPT extends ActionType {
 			String params) {
 		String param = params.trim().toUpperCase();
 
-		if (existUser(param)) {
+		if (existUser(param) && (params != null && !params.equals(""))) {
 			destinataires.add(new StringContainer(param));
 			if (super.sendMsg(super.reponseOk("250"))) {
 				return Etat.TRANSAC_DEST;
 			}
 		}
-		super.sendMsg(super.reponseKo("250", "Action demandée non effectuée "));
+		
+		if (params == null || params.equals("")){
+			super.sendMsg(super.reponseKo("553","Aucun desctinataire en parametre"));
+		}else{
+			super.sendMsg(super.reponseKo("553", "destinataire invalide"));
+		}
 		return Etat.TRANSAC_NO_DEST;
 	}
 
