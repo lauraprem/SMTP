@@ -36,6 +36,7 @@ public class Communication extends Thread {
 	private StringContainer expediteur;
 	private ArrayList<StringContainer> destinataires;
 	private FileMails data;
+	private boolean writing;
 
 	public static final String EXTENSION_MAIL = ".txt";
 	public static final String MAIL_PATH = "./StockMail/";
@@ -65,6 +66,7 @@ public class Communication extends Thread {
 		requete = null;
 		data = new FileMails(EXTENSION_MAIL, MAIL_PATH);
 		finRequete = "\r\n";
+		writing= false;
 		etatCourant = Etat.AUTHENTIFICATION;
 	}
 
@@ -138,9 +140,12 @@ public class Communication extends Thread {
 
 		// R�cup�ration et validation de la commande en fonction de l'�tat
 		// courrent
-		if (receive.length() >= 4) { // si fin \r\n
-			String command = receive.substring(0, 4);
-			String params = receive.substring(4);
+//		if (receive.length() >= 4) { // si fin \r\n
+		String params  ="";
+		String command = "";
+		if (receive.length() >= 4){
+			command = receive.substring(0, 4);
+			params = receive.substring(4);
 
 			// Mise à jour des params
 			ArrayList<String> commandParams = receiveCommandMailFrom(command,
@@ -150,6 +155,9 @@ public class Communication extends Thread {
 			commandParams = receiveCommandRcptTo(command, params);
 			command = commandParams.get(0);
 			params = commandParams.get(1);
+		}else{
+			command = receive;
+		}
 
 			MsgServer.msgInfo("Command receive", command,
 					expediteur.getString());
@@ -282,11 +290,11 @@ public class Communication extends Thread {
 				break;
 			}
 
-		} else {
-			MsgServer.msgWarnning("Invalid request form", null,
-					expediteur.getString());
-			this.sendMsg(this.reponseKo("Invalid request form"));
-		}
+//		} else {
+//			MsgServer.msgWarnning("Invalid request form", null,
+//					expediteur.getString());
+//			this.sendMsg(this.reponseKo("Invalid request form"));
+//		}
 
 		return isQuit;
 	}
@@ -365,8 +373,10 @@ public class Communication extends Thread {
 		}
 
 		String[] requeteString = ligne.split(finRequete);
-
-		return requeteString[0];
+		if(requeteString.length > 0){
+			return requeteString[0];
+		}
+		return finRequete;
 	}
 
 	/**

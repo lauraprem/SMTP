@@ -52,7 +52,7 @@ public class ActionDATA extends ActionType {
 			}
 		}
 
-		if (data.contains(finRequete + "." + finRequete)) {
+		if (data.equals(".")) {
 			
 			// Enregistrer dans les boîtes des users
 			for (int i = 0; i < users.size(); i++) {
