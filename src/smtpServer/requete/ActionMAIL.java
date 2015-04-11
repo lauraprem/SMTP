@@ -1,6 +1,7 @@
 package smtpServer.requete;
 
 import java.io.BufferedOutputStream;
+import java.util.ArrayList;
 
 import smtpServer.Etat;
 import util.StringContainer;
@@ -17,7 +18,13 @@ public class ActionMAIL extends ActionType {
 	}
 
 	public Etat processingMail(StringContainer expediteur,
-			StringContainer[] destinataires, FileMails mails, String params) {
+			ArrayList<StringContainer> destinataires, FileMails mails,
+			String params) {
+		if (params != null & params != "") {
+			expediteur.setString(params);
+			destinataires = new ArrayList<StringContainer>();
+			mails.supressMail();
+		}
 		return null;
 	}
 

@@ -104,9 +104,8 @@ public class Requete {
 		return quit.processingQuit();
 	}
 
-	public Etat processingData(ArrayList<StringContainer> users) {
-		// return data.processingData(users);
-		return null;
+	public Etat processingData(ArrayList<StringContainer> users,FileMails fileMails) {
+		 return data.processingData(users, fileMails);
 	}
 
 	public Etat processingReceiveData(String dataExempl) {
@@ -118,7 +117,8 @@ public class Requete {
 	}
 
 	public Etat processingMail(StringContainer expediteur,
-			StringContainer[] destinataires, FileMails mails, String params) {
+			ArrayList<StringContainer> destinataires, FileMails mails,
+			String params) {
 		return mail.processingMail(expediteur, destinataires, mails, params);
 	}
 }
