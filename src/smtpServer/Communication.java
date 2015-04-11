@@ -172,6 +172,8 @@ public class Communication extends Thread {
 				break;
 
 			case ETABL_TRANSAC:
+				command = receiveCommandMailFrom(command, params);
+				
 				switch (command) {
 				case "MAIL FROM":
 					MsgServer.msgInfo("processing", "MAIL FROM ...",
@@ -245,6 +247,8 @@ public class Communication extends Thread {
 
 				break;
 			case MSG_ENVOYE:
+				command = receiveCommandMailFrom(command, params);
+				
 				switch (command) {
 				case "MAIL FROM":
 					MsgServer.msgInfo("processing", "MAIL FROM ...",
@@ -357,6 +361,19 @@ public class Communication extends Thread {
 		String[] requeteString = ligne.split(finRequete);
 
 		return requeteString[0];
+	}
+	
+	/**
+	 * Récupération du from s'il existe
+	 * @return command MAIL FROM sinon MAIL
+	 */
+	private String receiveCommandMailFrom(String command, String params){
+		if(command.equals("MAIL")){
+			if(params.startsWith(" FROM") == true){
+				command = command+" FROM";
+			}
+		}
+		return command;
 	}
 
 }
