@@ -141,6 +141,15 @@ public class Communication extends Thread {
 		if (receive.length() >= 4) { // si fin \r\n
 			String command = receive.substring(0, 4);
 			String params = receive.substring(4);
+			
+			// Mise à jour des params
+			ArrayList<String> commandParams = receiveCommandMailFrom(command, params);
+			command = commandParams.get(0);
+			params = commandParams.get(1);
+			commandParams = receiveCommandRcptTo(command, params);
+			command = commandParams.get(0);
+			params = commandParams.get(1);
+			
 			MsgServer.msgInfo("Command receive", command,
 					expediteur.getString());
 			MsgServer.msgInfo("Params receive", params, expediteur.getString());
@@ -172,11 +181,6 @@ public class Communication extends Thread {
 				break;
 
 			case ETABL_TRANSAC:
-				// Mise à jour des params
-				ArrayList<String> commandParams = receiveCommandMailFrom(command, params);
-				command = commandParams.get(0);
-				params = commandParams.get(1);
-				
 				switch (command) {
 				case "MAIL FROM":
 					MsgServer.msgInfo("processing", "MAIL FROM ...",
@@ -250,10 +254,6 @@ public class Communication extends Thread {
 
 				break;
 			case MSG_ENVOYE:
-				ArrayList<String> commandParams2 = receiveCommandMailFrom(command, params);
-				command = commandParams2.get(0);
-				params = commandParams2.get(1);
-				
 				switch (command) {
 				case "MAIL FROM":
 					MsgServer.msgInfo("processing", "MAIL FROM ...",
@@ -379,9 +379,28 @@ public class Communication extends Thread {
 				command = command+" FROM";
 				params = params.replaceFirst(" FROM", "");
 			}
-			commandParams.add(command);
-			commandParams.add(params);
 		}
+		commandParams.add(command);
+		commandParams.add(params);
+		
+		return commandParams;
+	}
+	
+	/**
+	 * Récupération du from s'il existe
+	 * @return command RCPT TO et le params sinon RCPT et params
+	 */
+	private ArrayList<String> receiveCommandRcptTo(String command, String params){
+		ArrayList<String> commandParams = new ArrayList<String>();
+		if(command.equals("RCPT")){
+			if(params.startsWith(" TO") == true){
+				command = command+" TO";
+				params = params.replaceFirst(" TO", "");
+			}
+		}
+		commandParams.add(command);
+		commandParams.add(params);
+		
 		return commandParams;
 	}
 
