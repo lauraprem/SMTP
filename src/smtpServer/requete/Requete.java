@@ -8,7 +8,7 @@ import util.StringContainer;
 import util.FileMails.FileMails;
 
 public class Requete {
-	
+
 	private ActionEHLO ehlo;
 	private ActionMAIL mail;
 	private ActionRCPT rctp;
@@ -86,12 +86,14 @@ public class Requete {
 		this.quit = quit;
 	}
 
-	public boolean processingQuit() {
-		return quit.processingQuit();
+	public boolean processingQuit(StringContainer expediteur,
+			ArrayList<StringContainer> destinataires, FileMails mails) {
+		return quit.processingQuit(expediteur, destinataires, mails);
 	}
 
-	public Etat processingData(ArrayList<StringContainer> users,FileMails fileMails) {
-		 return data.processingData(users, fileMails);
+	public Etat processingData(ArrayList<StringContainer> users,
+			FileMails fileMails) {
+		return data.processingData(users, fileMails);
 	}
 
 	public Etat processingReceiveData(String dataExempl) {

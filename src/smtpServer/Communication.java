@@ -160,7 +160,8 @@ public class Communication extends Thread {
 					MsgServer.msgInfo("processing", "QUIT ...",
 							expediteur.getString());
 					requete.getQuit().setUser(expediteur.getString());
-					isQuit = requete.processingQuit();
+					isQuit = requete.processingQuit(expediteur, destinataires,
+							this.data);
 					break;
 				default:
 					MsgServer.msgWarnning("Unidentified command", command,
@@ -181,7 +182,8 @@ public class Communication extends Thread {
 				case "QUIT":
 					MsgServer.msgInfo("processing", "QUIT ...",
 							expediteur.getString());
-					isQuit = requete.processingQuit();
+					isQuit = requete.processingQuit(expediteur, destinataires,
+							this.data);
 					break;
 				default:
 					MsgServer.msgWarnning("Unidentified command", command,
@@ -201,7 +203,8 @@ public class Communication extends Thread {
 				case "QUIT":
 					MsgServer.msgInfo("processing", "QUIT ...",
 							expediteur.getString());
-					isQuit = requete.processingQuit();
+					isQuit = requete.processingQuit(expediteur, destinataires,
+							this.data);
 					break;
 				default:
 					MsgServer.msgWarnning("Unidentified command", command,
@@ -226,7 +229,8 @@ public class Communication extends Thread {
 				case "QUIT":
 					MsgServer.msgInfo("processing", "QUIT ...",
 							expediteur.getString());
-					isQuit = requete.processingQuit();
+					isQuit = requete.processingQuit(expediteur, destinataires,
+							this.data);
 					break;
 				default:
 					MsgServer.msgWarnning("Unidentified command", command,
@@ -251,7 +255,8 @@ public class Communication extends Thread {
 				case "QUIT":
 					MsgServer.msgInfo("processing", "QUIT ...",
 							expediteur.getString());
-					isQuit = requete.processingQuit();
+					isQuit = requete.processingQuit(expediteur, destinataires,
+							this.data);
 					break;
 				default:
 					MsgServer.msgWarnning("Unidentified command", command,
