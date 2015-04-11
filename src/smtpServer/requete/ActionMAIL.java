@@ -17,7 +17,7 @@ public class ActionMAIL extends ActionType {
 	}
 
 	public Etat processingMail(StringContainer expediteur,
-			StringContainer[] destinataires, FileMails mails) {
+			StringContainer[] destinataires, FileMails mails, String params) {
 		return null;
 	}
 

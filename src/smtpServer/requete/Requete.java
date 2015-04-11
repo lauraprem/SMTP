@@ -116,7 +116,7 @@ public class Requete {
 	}
 
 	public Etat processingMail(StringContainer expediteur,
-			StringContainer[] destinataires, FileMails mails) {
-		return mail.processingMail(expediteur, destinataires, mails);
+			StringContainer[] destinataires, FileMails mails, String params) {
+		return mail.processingMail(expediteur, destinataires, mails, params);
 	}
 }
