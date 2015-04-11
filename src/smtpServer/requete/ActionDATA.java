@@ -47,8 +47,9 @@ public class ActionDATA extends ActionType {
 			}
 		}
 		
-		if (data.contains(finRequete+"."+finRequete)) { // Fin du mail
+		if (data.contains(finRequete+"."+finRequete)) {
 			// Enregistrer dans les boites des users
+			
 			return Etat.MSG_ENVOYE;
 		}else{
 			return Etat.ECRI_MAIL;
