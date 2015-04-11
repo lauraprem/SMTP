@@ -20,7 +20,8 @@ public class ActionQUIT extends ActionType {
 		// ||!Lock.existUser(user)||Lock.unlock(user) != LockStates.ERROR) {
 
 		// Envoi du message au client
-		msg = super.reponseOk("POP3 server signing off");
+		// TODO effacer mémoires
+		msg = super.reponseOk("221");
 		if (sendMsg(msg)) {
 			return true;
 		}
