@@ -62,7 +62,7 @@ public class ActionDATA extends ActionType {
 				fileMails.setLocation(location+users.get(i).getString()+'/');
 				fileMails.extractMails();
 				fileMails.addMail(mail);
-//				fileMails.CreateSaveMails();
+				fileMails.CreateSaveMails();
 				fileMails.saveMails();
 				fileMails.supressMail();
 			}
