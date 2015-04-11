@@ -102,19 +102,19 @@ public class Requete {
 		return quit.PrecessingQuit();
 	}
 
-	
-	public Etat PrecessingDefault(String[] users) {
+	public Etat processingData(String[] users) {
 		return data.PrecessingData(users);
 	}
 
-	
-	public Etat PrecessingReceiveData(String dataExempl) {
+	public Etat processingReceiveData(String dataExempl) {
 		return data.PrecessingReceiveData(dataExempl);
 	}
 
-	// PrecessingReceiveData(String data)
-
 	public Etat processingEhlo(String params) {
 		return ehlo.ProcessingEhlo(params);
+	}
+
+	public Etat processingMail() {
+		return mail.PrecessingDefault();
 	}
 }

@@ -199,7 +199,7 @@ public class Communication extends Thread {
 					break;
 				case "DATA":
 					MsgServer.msgInfo("processing", "DATA ...", expediteur);
-					etatCourant = requete.PrecessingDefault(destinaires);
+					etatCourant = requete.processingData(destinaires);
 					break;
 				case "QUIT":
 					MsgServer.msgInfo("processing", "QUIT ...", expediteur);
@@ -214,7 +214,7 @@ public class Communication extends Thread {
 				break;
 			case ECRI_MAIL:
 				String data = command + params;
-				etatCourant = requete.PrecessingReceiveData(data);
+				etatCourant = requete.processingReceiveData(data);
 
 				break;
 			case MSG_ENVOYE:
