@@ -6,7 +6,6 @@ import java.util.ArrayList;
 public class Mail implements Serializable{
 	
 	// ATTRIBUTS
-	private int id; // nb message ==> pourra �tre enlev�
 	private ArrayList<String> listHeader;
 	private String endLine = "\r\n";
 	private ArrayList<String> listLine;
@@ -18,32 +17,18 @@ public class Mail implements Serializable{
 	public Mail() {
 		super();
 		
-		this.id = -1;
 		this.listHeader = new ArrayList<String>();
 		this.listLine = new ArrayList<String>();
 	}
 	
-	public Mail(int id, ArrayList<String> listHeader, ArrayList<String> listLine) {
+	public Mail(ArrayList<String> listHeader, ArrayList<String> listLine) {
 		super();
 		
-		this.id = id;
 		this.listHeader = listHeader;
 		this.listLine = listLine;
 	}
 	
 	// METHODES
-	public int getId() {
-		return id;
-	}
-
-
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-
-
 	public ArrayList<String> getListHeader() {
 		return listHeader;
 	}
