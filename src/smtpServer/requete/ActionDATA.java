@@ -59,6 +59,8 @@ public class ActionDATA extends ActionType {
 			for (int i = 0; i < users.size(); i++) {
 				fileMails.setName(users.get(i).getString());
 				fileMails.setLocation(fileMails.getLocation()+users.get(i).getString()+'/');
+				fileMails.extractMails();
+				mail.setId(fileMails.getListMail().size());
 				fileMails.addMail(mail);
 				fileMails.CreateSaveMails();
 				fileMails.saveMails();
