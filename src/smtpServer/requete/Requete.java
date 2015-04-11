@@ -1,6 +1,7 @@
 package smtpServer.requete;
 
 import java.io.BufferedOutputStream;
+import java.util.ArrayList;
 
 import smtpServer.Etat;
 import util.StringContainer;
@@ -103,8 +104,9 @@ public class Requete {
 		return quit.processingQuit();
 	}
 
-	public Etat processingData(StringContainer[] users) {
-		return data.processingData(users);
+	public Etat processingData(ArrayList<StringContainer> users) {
+		// return data.processingData(users);
+		return null;
 	}
 
 	public Etat processingReceiveData(String dataExempl) {

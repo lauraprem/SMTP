@@ -12,6 +12,7 @@ import java.io.Writer;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
 
 import smtpServer.requete.Requete;
 import util.StringContainer;
@@ -33,7 +34,7 @@ public class Communication extends Thread {
 	private String finRequete;
 	private Etat etatCourant;
 	private StringContainer expediteur;
-	private StringContainer[] destinaires;
+	private ArrayList<StringContainer> destinaires;
 	private FileMails data;
 
 	private static final int uneMinute = 60000;

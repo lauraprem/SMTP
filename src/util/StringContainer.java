@@ -8,6 +8,10 @@ public class StringContainer {
 		setString(s);
 	}
 
+	public StringContainer() {
+		setString("");
+	}
+
 	public String getString() {
 		return string;
 	}
