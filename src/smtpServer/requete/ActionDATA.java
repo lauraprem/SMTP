@@ -24,7 +24,7 @@ public class ActionDATA extends ActionType {
 		users = null;
 	}
 
-	public Etat PrecessingData(String[] users) {
+	public Etat processingData(String[] users) {
 		String msg = super.reponseOk("354");
 		if (sendMsg(msg)) {
 			mail = new Mail();
@@ -36,7 +36,7 @@ public class ActionDATA extends ActionType {
 		return Etat.TRANSAC_DEST;
 	}
 	
-	public Etat PrecessingReceiveData(String data) {
+	public Etat processingReceiveData(String data) {
 		if(data.equals(finRequete)){
 			endLine = true;
 		}else{

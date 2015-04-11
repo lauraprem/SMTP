@@ -12,7 +12,7 @@ public class ActionQUIT extends ActionType {
 		super(outDonnees);
 	}
 
-	public boolean PrecessingQuit() {
+	public boolean processingQuit() {
 		// TODO A enlever ou laisser si static (voir avec Laura)
 		// Lib�ration du verrou s'il est � lib�rer
 		String msg;

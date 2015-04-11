@@ -99,22 +99,22 @@ public class Requete {
 	}
 
 	public boolean processingQuit() {
-		return quit.PrecessingQuit();
+		return quit.processingQuit();
 	}
 
 	public Etat processingData(String[] users) {
-		return data.PrecessingData(users);
+		return data.processingData(users);
 	}
 
 	public Etat processingReceiveData(String dataExempl) {
-		return data.PrecessingReceiveData(dataExempl);
+		return data.processingReceiveData(dataExempl);
 	}
 
 	public Etat processingEhlo(String params) {
-		return ehlo.ProcessingEhlo(params);
+		return ehlo.processingEhlo(params);
 	}
 
 	public Etat processingMail() {
-		return mail.PrecessingDefault();
+		return mail.processingDefault();
 	}
 }

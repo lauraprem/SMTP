@@ -14,7 +14,7 @@ public class ActionRCPT extends ActionType {
 		super(outDonnees);
 	}
 
-	public Etat PrecessingDefault() {
+	public Etat processingDefault() {
 		// TODO A enlever ou laisser si static (voir avec Laura)
 		// Lib�ration du verrou s'il est � lib�rer
 		String msg;

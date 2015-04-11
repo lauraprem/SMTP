@@ -14,7 +14,7 @@ public class ActionEHLO extends ActionType {
 		super(outDonnees);
 	}
 
-	public Etat ProcessingEhlo(String params) {
+	public Etat processingEhlo(String params) {
 		String msg = super.reponseOkEhlo("250", "lauco greets" + params);
 		super.sendMsg(msg);
 		return Etat.ETABL_TRANSAC;
