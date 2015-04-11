@@ -20,8 +20,10 @@ public class ActionRCPT extends ActionType {
 
 	public Etat processingRcpt(ArrayList<StringContainer> destinataires,
 			String params) {
-		if (existUser(params)) {
-			destinataires.add(new StringContainer(params));
+		String param = params.trim().toUpperCase();
+
+		if (existUser(param)) {
+			destinataires.add(new StringContainer(param));
 			if (super.sendMsg(super.reponseOk("250"))) {
 				return Etat.TRANSAC_DEST;
 			}
