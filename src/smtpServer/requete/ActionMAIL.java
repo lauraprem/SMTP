@@ -20,7 +20,7 @@ public class ActionMAIL extends ActionType {
 	public Etat processingMail(StringContainer expediteur,
 			ArrayList<StringContainer> destinataires, FileMails mails,
 			String params) {
-		if (params != null && params != "") {
+		if (params != null && !params.equals("")) {
 			expediteur.setString(params);
 			destinataires = new ArrayList<StringContainer>();
 			mails.supressMail();
