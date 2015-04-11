@@ -106,9 +106,12 @@ public class FileMails implements Serializable {
 					new FileInputStream(fichier)));
 
 			// R�cup�ration des mails
+			int i =1;
 			while (true) {
 				try {
 					Mail mail = (Mail) ois.readObject();
+					mail.setId(i);
+					i++;
 					this.listMail.add(mail);
 				} catch (EOFException e) {
 					break;
