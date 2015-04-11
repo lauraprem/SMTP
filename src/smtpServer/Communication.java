@@ -212,7 +212,7 @@ public class Communication extends Thread {
 				case "DATA":
 					MsgServer.msgInfo("processing", "DATA ...",
 							expediteur.getString());
-					etatCourant = requete.processingData(destinaires);
+					etatCourant = requete.processingData(destinaires,data);
 					break;
 				case "QUIT":
 					MsgServer.msgInfo("processing", "QUIT ...",

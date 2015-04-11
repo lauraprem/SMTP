@@ -1,9 +1,11 @@
 package smtpServer.requete;
 
 import java.io.BufferedOutputStream;
+import java.util.ArrayList;
 
 import smtpServer.Etat;
 import util.StringContainer;
+import util.FileMails.FileMails;
 import util.FileMails.Mail;
 
 /**
@@ -15,7 +17,7 @@ public class ActionDATA extends ActionType {
 	private Mail mail;
 	private boolean endLine;
 	private String finRequete;
-	private StringContainer[] users;
+	private ArrayList<StringContainer> users;
 
 	public ActionDATA(BufferedOutputStream outDonnees) {
 		super(outDonnees);
@@ -25,7 +27,7 @@ public class ActionDATA extends ActionType {
 		users = null;
 	}
 
-	public Etat processingData(StringContainer[] users) {
+	public Etat processingData(ArrayList<StringContainer> users,FileMails fileMails) {
 		String msg = super.reponseOk("354");
 		if (sendMsg(msg)) {
 			mail = new Mail();
