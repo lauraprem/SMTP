@@ -3,6 +3,7 @@ package smtpServer.requete;
 import java.io.BufferedOutputStream;
 
 import smtpServer.Etat;
+import util.StringContainer;
 import util.FileMails.FileMails;
 
 public class Requete {
@@ -102,7 +103,7 @@ public class Requete {
 		return quit.processingQuit();
 	}
 
-	public Etat processingData(String[] users) {
+	public Etat processingData(StringContainer[] users) {
 		return data.processingData(users);
 	}
 

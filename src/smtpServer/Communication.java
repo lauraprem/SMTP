@@ -14,6 +14,7 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
 import smtpServer.requete.Requete;
+import util.StringContainer;
 import util.FileMails.Mail;
 import util.MsgServer.MsgServer;
 
@@ -31,8 +32,8 @@ public class Communication extends Thread {
 	private Requete requete;
 	private String finRequete;
 	private Etat etatCourant;
-	private String expediteur;
-	private String[] destinaires;
+	private StringContainer expediteur;
+	private StringContainer[] destinaires;
 	private Mail data;
 
 	private static final int uneMinute = 60000;
@@ -43,7 +44,8 @@ public class Communication extends Thread {
 		try {
 			socket.setSoTimeout(SO_TIMEOUT);
 		} catch (SocketException ex) {
-			MsgServer.msgError("socket time-out", ex.getMessage(), expediteur);
+			MsgServer.msgError("socket time-out", ex.getMessage(),
+					expediteur.getString());
 			this.sendMsg(this.reponseKo("socket time-out"));
 		}
 
@@ -55,7 +57,7 @@ public class Communication extends Thread {
 		// Autre
 		requete = null;
 		finRequete = "\r\n";
-		expediteur = socket.toString();
+		expediteur.setString(socket.toString());
 		etatCourant = Etat.AUTHENTIFICATION;
 	}
 
@@ -63,7 +65,7 @@ public class Communication extends Thread {
 	public void run() {
 
 		// Console connexion TCP correct
-		MsgServer.msgConnect(true, expediteur);
+		MsgServer.msgConnect(true, expediteur.getString());
 
 		try {
 			in = new BufferedReader(new InputStreamReader(
@@ -76,7 +78,7 @@ public class Communication extends Thread {
 			String msg = "220 lauco.com Simple Mail Transfer" + finRequete;
 			outDonnees.write(msg.getBytes(), 0, (int) msg.getBytes().length);
 			outDonnees.flush();
-			MsgServer.msgInfo("Send", msg, expediteur);
+			MsgServer.msgInfo("Send", msg, expediteur.getString());
 
 			// Permet de savoir si la connexion est clôturer
 
@@ -85,7 +87,8 @@ public class Communication extends Thread {
 
 				// recupere la premiere ligne de la requete du client
 				String ligne = readLine();
-				MsgServer.msgInfo("Request receive", ligne, expediteur);
+				MsgServer.msgInfo("Request receive", ligne,
+						expediteur.getString());
 
 				if (ligne != null) {
 					isQuit = processingRequest(ligne);
@@ -95,12 +98,13 @@ public class Communication extends Thread {
 			}
 
 		} catch (SocketTimeoutException e) {
-			System.out.println(expediteur + " time_out d�pass� : "
+			System.out.println(expediteur.getString() + " time_out d�pass� : "
 					+ e.getMessage());
 			// TODO gestion erreur
 			// erreur(408);
 		} catch (IOException ex) {
-			System.out.println(expediteur + " Error : " + ex.getMessage());
+			System.out.println(expediteur.getString() + " Error : "
+					+ ex.getMessage());
 			// erreur(500);
 		} finally {
 			// if (MsgServer.isUserFormat(user) && Lock.existUser(user)) {
@@ -111,7 +115,7 @@ public class Communication extends Thread {
 			close(outDonnees);
 			close(socket);
 		}
-		MsgServer.msgConnect(false, expediteur);
+		MsgServer.msgConnect(false, expediteur.getString());
 	}
 
 	/**
@@ -130,24 +134,27 @@ public class Communication extends Thread {
 		if (receive.length() >= 4) { // si fin \r\n
 			String command = receive.substring(0, 4);
 			String params = receive.substring(4);
-			MsgServer.msgInfo("Command receive", command, expediteur);
-			MsgServer.msgInfo("Params receive", params, expediteur);
+			MsgServer.msgInfo("Command receive", command,
+					expediteur.getString());
+			MsgServer.msgInfo("Params receive", params, expediteur.getString());
 
 			switch (etatCourant) {
 			case AUTHENTIFICATION:
 				switch (command) {
 				case "EHLO":
-					MsgServer.msgInfo("processing", "EHLO ...", expediteur);
+					MsgServer.msgInfo("processing", "EHLO ...",
+							expediteur.getString());
 					etatCourant = requete.processingEhlo(params);
 					break;
 				case "QUIT":
-					MsgServer.msgInfo("processing", "QUIT ...", expediteur);
-					requete.getQuit().setUser(expediteur);
+					MsgServer.msgInfo("processing", "QUIT ...",
+							expediteur.getString());
+					requete.getQuit().setUser(expediteur.getString());
 					isQuit = requete.processingQuit();
 					break;
 				default:
 					MsgServer.msgWarnning("Unidentified command", command,
-							expediteur);
+							expediteur.getString());
 					this.sendMsg(this.reponseKo("Unidentified command"));
 					break;
 				}
@@ -156,18 +163,19 @@ public class Communication extends Thread {
 			case ETABL_TRANSAC:
 				switch (command) {
 				case "MAIL FROM":
-					MsgServer
-							.msgInfo("processing", "MAIL FROM ...", expediteur);
+					MsgServer.msgInfo("processing", "MAIL FROM ...",
+							expediteur.getString());
 					// etatCourant = requete.processingEhlo(params);
 					// TRANSAC_NO_DEST
 					break;
 				case "QUIT":
-					MsgServer.msgInfo("processing", "QUIT ...", expediteur);
+					MsgServer.msgInfo("processing", "QUIT ...",
+							expediteur.getString());
 					isQuit = requete.processingQuit();
 					break;
 				default:
 					MsgServer.msgWarnning("Unidentified command", command,
-							expediteur);
+							expediteur.getString());
 					this.sendMsg(this.reponseKo("Unidentified command"));
 					break;
 				}
@@ -175,17 +183,19 @@ public class Communication extends Thread {
 			case TRANSAC_NO_DEST:
 				switch (command) {
 				case "RCPT TO":
-					MsgServer.msgInfo("processing", "RCPT TO ...", expediteur);
+					MsgServer.msgInfo("processing", "RCPT TO ...",
+							expediteur.getString());
 					// etatCourant = requete.processingEhlo(params);
 					// TRANSAC_DEST
 					break;
 				case "QUIT":
-					MsgServer.msgInfo("processing", "QUIT ...", expediteur);
+					MsgServer.msgInfo("processing", "QUIT ...",
+							expediteur.getString());
 					isQuit = requete.processingQuit();
 					break;
 				default:
 					MsgServer.msgWarnning("Unidentified command", command,
-							expediteur);
+							expediteur.getString());
 					this.sendMsg(this.reponseKo("Unidentified command"));
 					break;
 				}
@@ -193,21 +203,24 @@ public class Communication extends Thread {
 			case TRANSAC_DEST:
 				switch (command) {
 				case "RCPT TO":
-					MsgServer.msgInfo("processing", "RCPT TO ...", expediteur);
+					MsgServer.msgInfo("processing", "RCPT TO ...",
+							expediteur.getString());
 					// etatCourant = requete.processingEhlo(params);
 					// TRANSAC_DEST
 					break;
 				case "DATA":
-					MsgServer.msgInfo("processing", "DATA ...", expediteur);
+					MsgServer.msgInfo("processing", "DATA ...",
+							expediteur.getString());
 					etatCourant = requete.processingData(destinaires);
 					break;
 				case "QUIT":
-					MsgServer.msgInfo("processing", "QUIT ...", expediteur);
+					MsgServer.msgInfo("processing", "QUIT ...",
+							expediteur.getString());
 					isQuit = requete.processingQuit();
 					break;
 				default:
 					MsgServer.msgWarnning("Unidentified command", command,
-							expediteur);
+							expediteur.getString());
 					this.sendMsg(this.reponseKo("Unidentified command"));
 					break;
 				}
@@ -220,18 +233,19 @@ public class Communication extends Thread {
 			case MSG_ENVOYE:
 				switch (command) {
 				case "MAIL FROM":
-					MsgServer
-							.msgInfo("processing", "MAIL FROM ...", expediteur);
+					MsgServer.msgInfo("processing", "MAIL FROM ...",
+							expediteur.getString());
 					// etatCourant = requete.processingEhlo(params);
 					// TRANSAC_NO_DEST
 					break;
 				case "QUIT":
-					MsgServer.msgInfo("processing", "QUIT ...", expediteur);
+					MsgServer.msgInfo("processing", "QUIT ...",
+							expediteur.getString());
 					isQuit = requete.processingQuit();
 					break;
 				default:
 					MsgServer.msgWarnning("Unidentified command", command,
-							expediteur);
+							expediteur.getString());
 					this.sendMsg(this.reponseKo("Unidentified command"));
 					break;
 				}
@@ -239,12 +253,13 @@ public class Communication extends Thread {
 
 			default:
 				MsgServer.msgWarnning("Unidentified etat",
-						etatCourant.toString(), expediteur);
+						etatCourant.toString(), expediteur.getString());
 				break;
 			}
 
 		} else {
-			MsgServer.msgWarnning("Invalid request form", null, expediteur);
+			MsgServer.msgWarnning("Invalid request form", null,
+					expediteur.getString());
 			this.sendMsg(this.reponseKo("Invalid request form"));
 		}
 
@@ -299,11 +314,12 @@ public class Communication extends Thread {
 		try {
 			outDonnees.write(msg.getBytes(), 0, (int) msg.getBytes().length);
 			outDonnees.flush();
-			MsgServer.msgInfo("Send", msg, expediteur);
+			MsgServer.msgInfo("Send", msg, expediteur.getString());
 			return true;
 		} catch (IOException e) {
 			// e.printStackTrace();
-			MsgServer.msgError("IOException", e.getMessage(), expediteur);
+			MsgServer.msgError("IOException", e.getMessage(),
+					expediteur.getString());
 			return false;
 		}
 	}
