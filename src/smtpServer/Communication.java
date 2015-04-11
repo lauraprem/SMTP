@@ -34,9 +34,9 @@ public class Communication extends Thread {
 	private String finRequete;
 	private Etat etatCourant;
 	private StringContainer expediteur;
-	private ArrayList<StringContainer> destinaires;
+	private ArrayList<StringContainer> destinataires;
 	private FileMails data;
-	
+
 	public static final String EXTENSION_MAIL = ".txt";
 	public static final String MAIL_PATH = "./StockMail/";
 
@@ -45,9 +45,9 @@ public class Communication extends Thread {
 	public Communication(Socket connexion) {
 		SO_TIMEOUT = 10 * uneMinute;
 		socket = connexion;
-		expediteur= new StringContainer();
+		expediteur = new StringContainer();
 		expediteur.setString(socket.toString());
-		
+
 		try {
 			socket.setSoTimeout(SO_TIMEOUT);
 		} catch (SocketException ex) {
@@ -63,7 +63,7 @@ public class Communication extends Thread {
 
 		// Autre
 		requete = null;
-		data = new FileMails(EXTENSION_MAIL,MAIL_PATH);
+		data = new FileMails(EXTENSION_MAIL, MAIL_PATH);
 		finRequete = "\r\n";
 		etatCourant = Etat.AUTHENTIFICATION;
 	}
@@ -79,8 +79,8 @@ public class Communication extends Thread {
 					socket.getInputStream()));
 			outDonnees = new BufferedOutputStream(socket.getOutputStream());
 
-			requete = new Requete(outDonnees);			
-			
+			requete = new Requete(outDonnees);
+
 			// Envoi Message de bienvenue
 			String msg = "220 lauco.com Simple Mail Transfer" + finRequete;
 			outDonnees.write(msg.getBytes(), 0, (int) msg.getBytes().length);
@@ -152,7 +152,7 @@ public class Communication extends Thread {
 					MsgServer.msgInfo("processing", "EHLO ...",
 							expediteur.getString());
 					etatCourant = requete.processingEhlo(params);
-					if(etatCourant.equals(Etat.ETABL_TRANSAC)){
+					if (etatCourant.equals(Etat.ETABL_TRANSAC)) {
 						expediteur.setString(params);
 					}
 					break;
@@ -175,8 +175,8 @@ public class Communication extends Thread {
 				case "MAIL FROM":
 					MsgServer.msgInfo("processing", "MAIL FROM ...",
 							expediteur.getString());
-					// etatCourant = requete.processingEhlo(params);
-					// TRANSAC_NO_DEST
+					etatCourant = requete.processingMail(expediteur,
+							destinataires, data, params);
 					break;
 				case "QUIT":
 					MsgServer.msgInfo("processing", "QUIT ...",
@@ -221,7 +221,7 @@ public class Communication extends Thread {
 				case "DATA":
 					MsgServer.msgInfo("processing", "DATA ...",
 							expediteur.getString());
-					etatCourant = requete.processingData(destinaires,data);
+					etatCourant = requete.processingData(destinataires, data);
 					break;
 				case "QUIT":
 					MsgServer.msgInfo("processing", "QUIT ...",
@@ -245,8 +245,8 @@ public class Communication extends Thread {
 				case "MAIL FROM":
 					MsgServer.msgInfo("processing", "MAIL FROM ...",
 							expediteur.getString());
-					// etatCourant = requete.processingEhlo(params);
-					// TRANSAC_NO_DEST
+					etatCourant = requete.processingMail(expediteur,
+							destinataires, this.data, params);
 					break;
 				case "QUIT":
 					MsgServer.msgInfo("processing", "QUIT ...",

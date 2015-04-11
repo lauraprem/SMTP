@@ -24,31 +24,11 @@ public class ActionMAIL extends ActionType {
 			expediteur.setString(params);
 			destinataires = new ArrayList<StringContainer>();
 			mails.supressMail();
+			super.sendMsg(super.reponseOk("250"));
+			return Etat.TRANSAC_NO_DEST;
 		}
-		return null;
+		super.sendMsg(super.reponseKo("550", "Action demandée non effectuée "));
+		return Etat.ETABL_TRANSAC;
 	}
 
-	public Etat processingDefault() {
-		// TODO A enlever ou laisser si static (voir avec Laura)
-		// Lib�ration du verrou s'il est � lib�rer
-		String msg;
-		// if (user == null || user == ""
-		// ||!Lock.existUser(user)||Lock.unlock(user) != LockStates.ERROR) {
-
-		// Envoi du message au client
-		// msg = super.reponseOk("POP3 server signing off");
-		// if (sendMsg(msg)) {
-		// return true;
-		// }
-		//
-		// return false;
-		// } else {
-		// // TODO msg error
-		// // msg = super.reponseKo("Error lors du deverouillage");
-		// System.out.println("erreur lors du d�verouillage");
-		// return false;
-		// }
-
-		return null;
-	}
 }
