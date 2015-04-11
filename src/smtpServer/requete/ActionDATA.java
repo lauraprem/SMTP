@@ -56,13 +56,15 @@ public class ActionDATA extends ActionType {
 		if (data.equals(".")) {
 			
 			// Enregistrer dans les boîtes des users
+			String location = fileMails.getLocation();
 			for (int i = 0; i < users.size(); i++) {
 				fileMails.setName(users.get(i).getString());
-				fileMails.setLocation(fileMails.getLocation()+users.get(i).getString()+'/');
+				fileMails.setLocation(location+users.get(i).getString()+'/');
 				fileMails.extractMails();
 				fileMails.addMail(mail);
-				fileMails.CreateSaveMails();
+//				fileMails.CreateSaveMails();
 				fileMails.saveMails();
+				fileMails.supressMail();
 			}
 			
 			return Etat.MSG_ENVOYE;
