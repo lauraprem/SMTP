@@ -115,7 +115,8 @@ public class Requete {
 		return ehlo.processingEhlo(params);
 	}
 
-	public Etat processingMail() {
-		return mail.processingDefault();
+	public Etat processingMail(StringContainer expediteur,
+			StringContainer[] destinataires, FileMails mails) {
+		return mail.processingMail(expediteur, destinataires, mails);
 	}
 }

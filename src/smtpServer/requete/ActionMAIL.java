@@ -3,6 +3,8 @@ package smtpServer.requete;
 import java.io.BufferedOutputStream;
 
 import smtpServer.Etat;
+import util.StringContainer;
+import util.FileMails.FileMails;
 
 /**
  *
@@ -12,6 +14,11 @@ public class ActionMAIL extends ActionType {
 
 	public ActionMAIL(BufferedOutputStream outDonnees) {
 		super(outDonnees);
+	}
+
+	public Etat processingMail(StringContainer expediteur,
+			StringContainer[] destinataires, FileMails mails) {
+		return null;
 	}
 
 	public Etat processingDefault() {

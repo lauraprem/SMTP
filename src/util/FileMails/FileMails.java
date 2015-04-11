@@ -24,14 +24,15 @@ public class FileMails implements Serializable {
 	// private String DEFAULT_ENCODING = "utf-8";
 
 	// CONSTRUCTEURS
-	public FileMails(String name, String extension, String location, ArrayList<Mail> listMail) {
+	public FileMails(String name, String extension, String location,
+			ArrayList<Mail> listMail) {
 		this.name = name;
 		this.extension = extension;
 		this.location = location;
 		this.listMail = listMail;
 	}
 
-	public FileMails(String name,String extension, String location) {
+	public FileMails(String name, String extension, String location) {
 		super();
 		this.name = name;
 		this.extension = extension;
@@ -65,7 +66,7 @@ public class FileMails implements Serializable {
 	}
 
 	public Mail getMail(int num) {
-		if(!listMail.isEmpty()){
+		if (!listMail.isEmpty()) {
 			for (Mail mail : listMail) {
 				if (mail.getId() == num) {
 					return mail;
@@ -79,65 +80,65 @@ public class FileMails implements Serializable {
 
 		// Recherche du mail
 		Mail mail = getMail(num);
-		
-		if(mail != null){
+
+		if (mail != null) {
 			return mail.CalculationSizeMail();
 		}
-		
+
 		return 0;
 	}
 
 	public boolean extractMails() {
-		String path = location+name+extension;
+		String path = location + name + extension;
 		File fichier = new File(path);
 		ObjectInputStream ois;
 
-			try {
-				ois = new ObjectInputStream(new BufferedInputStream(
-						new FileInputStream(fichier)));
-				
-				
-				// Récupération des mails
-				while(true){
-				    try{
-						Mail mail = (Mail) ois.readObject();
-						this.listMail.add(mail);
-				    } catch (EOFException e){
-				    	break;
-			    	}
-			    }
-				
-				ois.close();
-				
-			}catch(java.io.EOFException e){ // fichier vide dès début => 0 mails
-//				e.printStackTrace();
-				return false;
-			} catch (ClassNotFoundException e) {
-//				e.printStackTrace();
-				return false;
-			} catch (FileNotFoundException e) {
-//				e.printStackTrace();
-				return false;
-			} catch (IOException e) {
-//				e.printStackTrace();
-				return false;
+		try {
+			ois = new ObjectInputStream(new BufferedInputStream(
+					new FileInputStream(fichier)));
+
+			// Rï¿½cupï¿½ration des mails
+			while (true) {
+				try {
+					Mail mail = (Mail) ois.readObject();
+					this.listMail.add(mail);
+				} catch (EOFException e) {
+					break;
+				}
 			}
-			
-			return true;
+
+			ois.close();
+
+		} catch (java.io.EOFException e) { // fichier vide dï¿½s dï¿½but => 0 mails
+			// e.printStackTrace();
+			return false;
+		} catch (ClassNotFoundException e) {
+			// e.printStackTrace();
+			return false;
+		} catch (FileNotFoundException e) {
+			// e.printStackTrace();
+			return false;
+		} catch (IOException e) {
+			// e.printStackTrace();
+			return false;
+		}
+
+		return true;
 	}
 
 	public void saveMails() {
-		String path = location+name+extension;
+		String path = location + name + extension;
 		File fichier = new File(path);
 		ObjectOutputStream oos;
 
 		try {
-			// première écriture lors création du fichier
-			 oos = new ObjectOutputStream(new BufferedOutputStream(
-			 new FileOutputStream(fichier)));
+			// premiï¿½re ï¿½criture lors crï¿½ation du fichier
+			oos = new ObjectOutputStream(new BufferedOutputStream(
+					new FileOutputStream(fichier)));
 
-			// Ecrit à la suite
-//			oos = new AppendObjectOutputStream(new FileOutputStream(fichier));
+			// Ecrit ï¿½ la suite
+			// oos = new AppendObjectOutputStream(new
+			// FileOutputStream(fichier));
 
 			// Ecrire chaque objet Mail dans le fichier
 			ArrayList<String> listHeader = new ArrayList<String>();
@@ -148,21 +149,21 @@ public class FileMails implements Serializable {
 			listLine.add("C'est un message juste pour tester. Alors, \"Test\".");
 			oos.writeObject(new Mail(1, listHeader, listLine));
 
-			 listHeader = new ArrayList<String>();
-			 listHeader.add("Message-ID: <1234@local.machine.example");
-			 listHeader.add("From: John Doe <jdoe@machine.example>");
-			 listHeader.add("Subject: C'est un essai 2");
-			 listLine = new ArrayList<String>();
-			 listLine.add("C'est un message juste pour tester. Alors, \"Test\".");
-			 oos.writeObject(new Mail(2, listHeader,listLine));
-			
-			 listHeader = new ArrayList<String>();
-			 listHeader.add("Message-ID: <1234@local.machine.example>");
-			 listHeader.add("From: John Doe <jdoe@machine.example>");
-			 listHeader.add("Subject: C'est un essai 3");
-			 listLine = new ArrayList<String>();
-			 listLine.add("C'est un message juste pour tester. Alors, \"Test\".");
-			 oos.writeObject(new Mail(3, listHeader,listLine));
+			listHeader = new ArrayList<String>();
+			listHeader.add("Message-ID: <1234@local.machine.example");
+			listHeader.add("From: John Doe <jdoe@machine.example>");
+			listHeader.add("Subject: C'est un essai 2");
+			listLine = new ArrayList<String>();
+			listLine.add("C'est un message juste pour tester. Alors, \"Test\".");
+			oos.writeObject(new Mail(2, listHeader, listLine));
+
+			listHeader = new ArrayList<String>();
+			listHeader.add("Message-ID: <1234@local.machine.example>");
+			listHeader.add("From: John Doe <jdoe@machine.example>");
+			listHeader.add("Subject: C'est un essai 3");
+			listLine = new ArrayList<String>();
+			listLine.add("C'est un message juste pour tester. Alors, \"Test\".");
+			oos.writeObject(new Mail(3, listHeader, listLine));
 
 			oos.close();
 
@@ -175,13 +176,13 @@ public class FileMails implements Serializable {
 
 	public void CreateSaveMails() {
 
-		String path = location+name+extension;
-		// TODO Créer le fichier
+		String path = location + name + extension;
+		// TODO Crï¿½er le fichier
 		File fichier = new File(path);
 		ObjectOutputStream oos;
 
 		try {
-			// première écriture lors création du fichier
+			// premiï¿½re ï¿½criture lors crï¿½ation du fichier
 			oos = new ObjectOutputStream(new BufferedOutputStream(
 					new FileOutputStream(fichier)));
 
@@ -197,6 +198,10 @@ public class FileMails implements Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void supressMail() {
+		listMail = new ArrayList<Mail>();
 	}
 
 	// public void extractMails() {
