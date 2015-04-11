@@ -153,7 +153,7 @@ public class Communication extends Thread {
 							expediteur.getString());
 					etatCourant = requete.processingEhlo(params);
 					if (etatCourant.equals(Etat.ETABL_TRANSAC)) {
-						expediteur.setString(params);
+						expediteur.setString(params.trim());
 					}
 					break;
 				case "QUIT":
@@ -199,7 +199,7 @@ public class Communication extends Thread {
 				case "RCPT TO":
 					MsgServer.msgInfo("processing", "RCPT TO ...",
 							expediteur.getString());
-					// etatCourant = requete.processingEhlo(params);
+					 etatCourant = requete.processingRcpt(destinataires, params);
 					// TRANSAC_DEST
 					break;
 				case "QUIT":
@@ -220,7 +220,7 @@ public class Communication extends Thread {
 				case "RCPT TO":
 					MsgServer.msgInfo("processing", "RCPT TO ...",
 							expediteur.getString());
-					// etatCourant = requete.processingEhlo(params);
+					etatCourant = requete.processingRcpt(destinataires, params);
 					// TRANSAC_DEST
 					break;
 				case "DATA":
@@ -371,6 +371,7 @@ public class Communication extends Thread {
 		if(command.equals("MAIL")){
 			if(params.startsWith(" FROM") == true){
 				command = command+" FROM";
+				params = params.split(" FROM")[0];
 			}
 		}
 		return command;

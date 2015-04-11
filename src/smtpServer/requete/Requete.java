@@ -109,4 +109,9 @@ public class Requete {
 			String params) {
 		return mail.processingMail(expediteur, destinataires, mails, params);
 	}
+	
+	public Etat processingRcpt(ArrayList<StringContainer> destinataires,
+			String params) {
+		return rctp.processingRcpt(destinataires,params);
+	}
 }
