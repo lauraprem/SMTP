@@ -148,30 +148,27 @@ public class FileMails implements Serializable {
 			// oos = new AppendObjectOutputStream(new
 			// FileOutputStream(fichier));
 
-			// Ecrire chaque objet Mail dans le fichier
-			ArrayList<String> listHeader = new ArrayList<String>();
-			listHeader.add("Message-ID: <1234@local.machine.example>");
-			listHeader.add("From: John Doe <jdoe@machine.example>");
-			listHeader.add("Subject: C'est un essai");
-			ArrayList<String> listLine = new ArrayList<String>();
-			listLine.add("C'est un message juste pour tester. Alors, \"Test\".");
-			oos.writeObject(new Mail(1, listHeader, listLine));
+			// Ecrire chaque objet Mail dans le fichier			
+			for (int i = 0; i < listMail.size(); i++) {
+				oos.writeObject(listMail.get(i));
+			}
+			
 
-			listHeader = new ArrayList<String>();
-			listHeader.add("Message-ID: <1234@local.machine.example");
-			listHeader.add("From: John Doe <jdoe@machine.example>");
-			listHeader.add("Subject: C'est un essai 2");
-			listLine = new ArrayList<String>();
-			listLine.add("C'est un message juste pour tester. Alors, \"Test\".");
-			oos.writeObject(new Mail(2, listHeader, listLine));
-
-			listHeader = new ArrayList<String>();
-			listHeader.add("Message-ID: <1234@local.machine.example>");
-			listHeader.add("From: John Doe <jdoe@machine.example>");
-			listHeader.add("Subject: C'est un essai 3");
-			listLine = new ArrayList<String>();
-			listLine.add("C'est un message juste pour tester. Alors, \"Test\".");
-			oos.writeObject(new Mail(3, listHeader, listLine));
+//			listHeader = new ArrayList<String>();
+//			listHeader.add("Message-ID: <1234@local.machine.example");
+//			listHeader.add("From: John Doe <jdoe@machine.example>");
+//			listHeader.add("Subject: C'est un essai 2");
+//			listLine = new ArrayList<String>();
+//			listLine.add("C'est un message juste pour tester. Alors, \"Test\".");
+//			oos.writeObject(new Mail(2, listHeader, listLine));
+//
+//			listHeader = new ArrayList<String>();
+//			listHeader.add("Message-ID: <1234@local.machine.example>");
+//			listHeader.add("From: John Doe <jdoe@machine.example>");
+//			listHeader.add("Subject: C'est un essai 3");
+//			listLine = new ArrayList<String>();
+//			listLine.add("C'est un message juste pour tester. Alors, \"Test\".");
+//			oos.writeObject(new Mail(3, listHeader, listLine));
 
 			oos.close();
 
@@ -202,14 +199,20 @@ public class FileMails implements Serializable {
 			oos.close();
 
 		} catch (FileNotFoundException e) {
+			System.out.println("FileNotFoundException");
 			e.printStackTrace();
 		} catch (IOException e) {
+			System.out.println("IOException");
 			e.printStackTrace();
 		}
 	}
 
 	public void supressMail() {
 		listMail = new ArrayList<Mail>();
+	}
+	
+	public void addMail(Mail m) {
+		listMail.add(m);
 	}
 
 	// public void extractMails() {

@@ -35,6 +35,7 @@ public class ActionDATA extends ActionType {
 			endLine = false;
 			this.users = users;
 			this.fileMails = fileMails;
+			fileMails.addMail(mail);
 			return Etat.ECRI_MAIL;
 		}
 
@@ -57,6 +58,9 @@ public class ActionDATA extends ActionType {
 			// Enregistrer dans les boîtes des users
 			for (int i = 0; i < users.size(); i++) {
 				fileMails.setName(users.get(i).getString());
+				fileMails.setLocation(fileMails.getLocation()+users.get(i).getString()+'/');
+				fileMails.addMail(mail);
+				fileMails.CreateSaveMails();
 				fileMails.saveMails();
 			}
 			
