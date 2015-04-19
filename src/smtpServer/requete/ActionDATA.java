@@ -67,6 +67,9 @@ public class ActionDATA extends ActionType {
 				fileMailsTmp.saveMails();
 			}
 			
+			String msg = super.reponseOk("250");
+			sendMsg(msg);
+			
 			return Etat.MSG_ENVOYE;
 		} else {
 			return Etat.ECRI_MAIL;
