@@ -31,7 +31,11 @@ public class ActionRCPT extends ActionType {
 		} else {
 			super.sendMsg(super.reponseKo("553", "destinataire invalide"));
 		}
-		return Etat.TRANSAC_NO_DEST;
+		if (!destinataires.isEmpty()) {
+			return Etat.TRANSAC_DEST;
+		} else {
+			return Etat.TRANSAC_NO_DEST;
+		}
 	}
 
 	public static boolean existUser(String user) {
