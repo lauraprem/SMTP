@@ -18,9 +18,8 @@ public class ActionRCPT extends ActionType {
 		super(outDonnees);
 	}
 
-	public Etat processingRcpt(ArrayList<StringContainer> destinataires,
-			String params) {
-		String param = params.trim().toUpperCase();
+	public Etat processingRcpt(ArrayList<StringContainer> destinataires, String params) {
+		String param = params.toUpperCase().replace(">", "").replace("<", "").replace(":", "").trim();
 
 		if (existUser(param) && (params != null && !params.equals(""))) {
 			destinataires.add(new StringContainer(param));
@@ -28,8 +27,7 @@ public class ActionRCPT extends ActionType {
 				return Etat.TRANSAC_DEST;
 			}
 		} else if (params == null || params.equals("")) {
-			super.sendMsg(super.reponseKo("553",
-					"Aucun desctinataire en parametre"));
+			super.sendMsg(super.reponseKo("553", "Aucun desctinataire en parametre"));
 		} else {
 			super.sendMsg(super.reponseKo("553", "destinataire invalide"));
 		}
