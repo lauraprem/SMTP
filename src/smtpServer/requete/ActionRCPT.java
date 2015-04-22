@@ -19,7 +19,7 @@ public class ActionRCPT extends ActionType {
 	}
 
 	public Etat processingRcpt(ArrayList<StringContainer> destinataires, String params) {
-		String param = params.toUpperCase().replace(">", "").replace("<", "").replace(":", "").trim();
+		String param = getUser(params);
 
 		if (existUser(param) && (params != null && !params.equals(""))) {
 			destinataires.add(new StringContainer(param));
@@ -41,5 +41,9 @@ public class ActionRCPT extends ActionType {
 	public static boolean existUser(String user) {
 		File userFolder = new File(Requete.MAIL_PATH + user.toUpperCase());
 		return userFolder.exists();
+	}
+	
+	public String getUser(String param){
+		return (param.toUpperCase().replace(">", "").replace("<", "").replace(":", "").trim()).split("@")[0];
 	}
 }
