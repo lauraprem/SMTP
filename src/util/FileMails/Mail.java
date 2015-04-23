@@ -90,7 +90,10 @@ public class Mail implements Serializable{
 		for (int i = 0; i < listLine.size(); i++) {
 			stringMail = stringMail + listLine.get(i)+endLine;
 		}
-		stringMail = stringMail + endMsg;
+		
+		stringMail = stringMail.replaceAll(endLine + endMsg, "\n" + endMsg);
+		String endOfString = (stringMail.length() > 1 ? stringMail.substring(stringMail.length() - 2) : "");
+		stringMail = stringMail + (endLine.equals(endOfString) ? endMsg : endLine + endMsg);
 		
 		return stringMail;
 	}
